@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-feather-staging-22428-authRole",
+      "UnauthRoleArn": "arn:aws:iam::158494852272:role/amplify-feather-staging-22428-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::158494852272:role/amplify-feather-staging-22428-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-feather-staging-22428-deployment",
+      "UnauthRoleName": "amplify-feather-staging-22428-unauthRole",
+      "StackName": "amplify-feather-staging-22428",
+      "StackId": "arn:aws:cloudformation:us-east-1:158494852272:stack/amplify-feather-staging-22428/b0a4eb50-ba33-11ed-b364-0a62aa7b785b",
+      "AmplifyAppId": "d1vzfntxuudkpa"
+    },
+    "categories": {
+      "auth": {
+        "featherfa607591": {}
+      }
+    }
+  }
+}
