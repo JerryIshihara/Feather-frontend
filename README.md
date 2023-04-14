@@ -6,7 +6,7 @@ The template is in the `.env.template` file, add the vairables to the environmen
 
 ### How to run
 
-`yarn install & yarn start`
+`yarn install && yarn start`
 
 ### Collaboration
 
