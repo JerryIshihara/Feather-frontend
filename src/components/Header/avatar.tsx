@@ -13,7 +13,7 @@ interface Props {
 
 const HeaderAvatar: React.FC<Props> = props => {
 	const theme = useTheme();
-	const auth = useAuth();
+	const auth = useAuth() as any;
 	const navigate = useNavigate();
 	const show = useMemo(() => (auth.user ? true : false), [auth.user]);
 	return (
@@ -21,27 +21,7 @@ const HeaderAvatar: React.FC<Props> = props => {
 			<div className="login-tabs">
 				{show ? (
 					<div style={{ height: 60, width: 60 }} onClick={() => navigate("/dashboard")}>
-						<BigHead
-							accessory="shades"
-							body="chest"
-							circleColor="blue"
-							clothing="tankTop"
-							clothingColor="black"
-							eyebrows="angry"
-							eyes="wink"
-							facialHair="mediumBeard"
-							graphic="vue"
-							hair="short"
-							hairColor="black"
-							hat="none"
-							hatColor="green"
-							lashes={false}
-							lipColor="purple"
-							mask={true}
-							faceMask={true}
-							mouth="open"
-							skinTone="brown"
-						/>
+						<Avatar src={auth.user.attributes.picture} />
 					</div>
 				) : (
 					<>

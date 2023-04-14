@@ -8,10 +8,13 @@ import { LoadingButton } from "@mui/lab";
 import { Close } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
 import { generateVideoThumbnail } from "../../../utils/video";
-import { postVideoObject, uploadThumbnail, uploadVideo, getVideos } from "../../../api/video";
+import { postVideoObject, uploadThumbnail, uploadVideo } from "../../../api/video";
 import { useNotification } from "../../../contexts/notification";
+import { useAuth } from "../../../contexts/auth";
 
 const VideoModal = ({ file, handleClose }: { file: File | undefined; handleClose: () => void }) => {
+	const auth = useAuth() as any;
+
 	const notifications = useNotification();
 	const [thumbnail, setThumbnail] = useState<string>();
 	const [title, setTitle] = useState<string>("");
@@ -47,9 +50,9 @@ const VideoModal = ({ file, handleClose }: { file: File | undefined; handleClose
 			notifications.pop({ status: "error", message: "Please fill out all fields" });
 		}
 		Promise.all([
-			uploadVideo(file, videoKey, "video/mp4"),
-			uploadThumbnail(thumbnailBlob, thumbnailKey, "image/png"),
-			postVideoObject(videoObject),
+			uploadVideo(auth.user, file, videoKey, "video/mp4"),
+			uploadThumbnail(auth.user, thumbnailBlob, thumbnailKey, "image/png"),
+			postVideoObject(auth.user, videoObject),
 		])
 			.then(res => {
 				console.log(res);
@@ -60,17 +63,16 @@ const VideoModal = ({ file, handleClose }: { file: File | undefined; handleClose
 			.finally(() => {
 				setLoading(false);
 				notifications.pop({ status: "success", message: "Video uploaded successfully" });
-				setTimeout(() => {
-					handleClose();
-				}, 1000);
+				handleClose();
 			});
 	};
 
 	return (
 		<Modal open={!!file && !!thumbnail} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
 			<Box
+				component="div"
 				sx={{
-					position: "absolute" as "absolute",
+					position: "absolute",
 					top: "50%",
 					left: "50%",
 					transform: "translate(-50%, -50%)",

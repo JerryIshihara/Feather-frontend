@@ -56,7 +56,10 @@ export const AuthContextProvider = (props: any) => {
 			}
 		});
 		Auth.currentAuthenticatedUser()
-			.then(currentUser => setUser(currentUser))
+			.then(currentUser => {
+				console.log(currentUser);
+				setUser(currentUser);
+			})
 			.catch(() => {});
 		setLoading(false);
 		return unsubscribe;

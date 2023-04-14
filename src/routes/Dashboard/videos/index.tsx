@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { useTheme, Container, Typography, Stack, Grid, Box, Card, CardMedia, CardContent, CardActionArea, Button } from "@mui/material";
+import { useTheme, Container, Typography, Stack, Grid, Box, CircularProgress, Button } from "@mui/material";
 import { Upload, AutoAwesome, Close } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
-import { getVideos } from "../../../api/video";
+import { getVideo } from "../../../api/video";
 import VideoModal from "./upload-modal";
 import Watch from "./watch";
+import VideoThumbnail from "./video-thumbnail";
 
 const Video = () => {
 	const theme = useTheme();
 	const navigate = useNavigate();
 	const [file, setFile] = useState<File>();
 	const [videos, setVideos] = useState<any[]>([]);
+	const [loading, setLoading] = useState<boolean>(false);
 	const upload = async (event: any) => {
 		const file = event.target.files[0];
+		console.log(file);
 		if (!file.type.includes("video")) {
 			alert("not a video and don't submit, just return");
 			return;
@@ -23,9 +26,14 @@ const Video = () => {
 	};
 	useEffect(() => {
 		if (videos.length > 0) return;
-		getVideos().then(res => {
-			setVideos(res.data.body.Items);
-		});
+		setLoading(true);
+		getVideo(null)
+			.then(res => {
+				setVideos(res.data.Items);
+			})
+			.catch(console.error)
+			.finally(() => setLoading(false));
+		return () => setVideos([]);
 	}, []);
 	return (
 		<Routes>
@@ -55,43 +63,18 @@ const Video = () => {
 							</Grid>
 						</Stack>
 
-						<Box sx={{ mt: theme.spacing(4), display: "grid", gridTemplateColumns: { md: "1fr 1fr 1fr" }, gap: 4 }}>
-							{videos.map(item => (
-								<Card key={item["video-id"]["S"]} sx={{ minWidth: 200, flex: 1 }}>
-									<CardActionArea
-										onClick={() => {
-											navigate(`/dashboard/video/watch?v=${item["videoKey"]["S"]}`);
-										}}
-									>
-										<CardMedia
-											component="img"
-											height="194"
-											image={`${process.env.REACT_APP_CDN_URL}${item.thumbnailKey.S}`}
-											alt="Paella dish"
-										/>
-										<CardContent sx={{ gap: 2 }}>
-											<Typography variant="h6" sx={{ fontSize: 16, fontWeight: "700" }} color="text.primary" gutterBottom>
-												{item.title.S}
-											</Typography>
+						{loading ? (
+							<Stack direction="row" alignItems="center" justifyContent="center" sx={{ height: 400, width: "100%" }} spacing={2}>
+								<CircularProgress size={50} />
+							</Stack>
+						) : (
+							<Box component="div" sx={{ mt: theme.spacing(4), display: "grid", gridTemplateColumns: { md: "1fr 1fr 1fr" }, gap: 4 }}>
+								{videos.map(item => (
+									<VideoThumbnail key={item["video-id"]["S"]} videoObject={item} />
+								))}
+							</Box>
+						)}
 
-											<Typography variant="body2" sx={{ mb: 2 }}>
-												{item.description.S}
-											</Typography>
-
-											<Typography variant="body2" color="text.secondary">
-												{new Date(Number(item["updatedAt"]["N"]) * 1000).toLocaleDateString()}{" "}
-												{new Date(Number(item["updatedAt"]["N"]) * 1000).toLocaleTimeString()}
-											</Typography>
-										</CardContent>
-										{/* <CardActions>
-								<IconButton size="large" color="primary">
-									<AutoAwesome />
-								</IconButton>
-							</CardActions> */}
-									</CardActionArea>
-								</Card>
-							))}
-						</Box>
 						<VideoModal file={file} handleClose={() => setFile(undefined)} />
 					</Container>
 				}

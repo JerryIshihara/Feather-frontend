@@ -1,28 +1,49 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useTheme, Container, Button } from "@mui/material";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import Spline from "@splinetool/react-spline";
 
 import { Header, Footer } from "../../components";
 import Court3D from "./court";
 import Booking from "../Booking";
 import Feed from "../Feed";
 import Pricing from "../Pricing";
+import { Stack } from "@mui/system";
+import SplineCourt from "./spline-court";
+
+const SCENE = "https://prod.spline.design/U2fplQkZQPZ02Xkn/scene.splinecode";
 
 const LandingContent = () => {
 	const theme = useTheme();
 	const navigate = useNavigate();
+	const ref = useRef() as any;
 	return (
 		<div>
 			<Container maxWidth="lg">
-				<div style={{ textAlign: "center", marginTop: "50px" }}>
-					<span style={{ fontSize: "100px", fontWeight: "600" }}>Smash the badminton with AI-powered tool.</span>
-				</div>
-				<Court3D />
-				<Container style={{ textAlign: "center", marginTop: "450px" }} maxWidth="md">
-					<p style={{ fontSize: "25px" }}>
-						Get your game highlight clips with just one-click. Analyze your motion data and skills with our advanced AI tools.
+				<Stack direction="column" alignItems="center" spacing={0} style={{ marginTop: -50 }}>
+					<p style={{ textAlign: "center", fontSize: 70, fontWeight: "600", backgroundColor: "transparent", marginTop: 50 }}>
+						Smash the badminton with AI-powered tool.
 					</p>
+					<img alt="court" src={require("../../assets/spline-court.png")} style={{ width: "100%", marginTop: -200, marginBottom: -100 }} />
+					{/* <div style={{ width: "100%", background: "grey", height: 500 }}> */}
+					{/* <Spline
+						ref={ref}
+						scene={SCENE}
+						style={{ width: "100%", background: "grey", height: 500 }}
+						onLoad={() => {
+							console.log(ref?.current?.children[0]);
+							ref!.current!.children[0].style.width = `${1474 / 2}px`;
+							ref!.current!.children[0].style.height = `${1086 / 2}px`;
+							ref!.current!.children[0].position += 20;
+							// ref!.current!.children[0].width = window.innerWidth / 2;
+							// ref!.current!.children[0].height = "500px";
+						}}
+					/> */}
+
 					<center>
+						<p style={{ fontSize: "25px", padding: "0 30px" }}>
+							Get your game highlight clips with just one-click. Analyze your motion data and skills with our advanced AI tools.
+						</p>
 						<Button
 							variant="contained"
 							size="large"
@@ -33,7 +54,8 @@ const LandingContent = () => {
 							Get started
 						</Button>
 					</center>
-				</Container>
+				</Stack>
+
 				<center style={{ marginTop: "100px", opacity: 0.5 }}>
 					<p style={{ fontSize: "20px", color: theme.palette.text.secondary, fontWeight: "700" }}>TRUSTED BY</p>
 					<center style={{ gap: "10px" }}>

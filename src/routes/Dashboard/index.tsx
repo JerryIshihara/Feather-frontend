@@ -8,7 +8,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Logout, Home, Movie, Settings, AutoGraph, Person } from "@mui/icons-material";
+import { Logout, Home, Movie, Settings, AutoGraph, Person, Payment } from "@mui/icons-material";
 import { indigo } from "@mui/material/colors";
 
 import { useAuth } from "../../contexts/auth";
@@ -18,11 +18,12 @@ import Analysis from "./analysis";
 import Video from "./videos";
 
 const SideBarRoutes = [
-	{ title: "Overview", icon: <Home />, uri: "/dashboard" },
-	{ title: "Profile", icon: <Person />, uri: "/dashboard/profile" },
-	{ title: "Video", icon: <Movie />, uri: "/dashboard/video" },
-	{ title: "Analysis", icon: <AutoGraph />, uri: "/dashboard/analysis" },
-	{ title: "Settings", icon: <Settings />, uri: "/dashboard/settings" },
+	{ title: "Overview", icon: <Home />, uri: "/dashboard", isActive: (path: string) => /^\/dashboard$/.test(path) },
+	{ title: "Profile", icon: <Person />, uri: "/dashboard/profile", isActive: (path: string) => /^\/dashboard\/profile*/.test(path) },
+	{ title: "Video", icon: <Movie />, uri: "/dashboard/video", isActive: (path: string) => /^\/dashboard\/video*/.test(path) },
+	{ title: "Analysis", icon: <AutoGraph />, uri: "/dashboard/analysis", isActive: (path: string) => /^\/dashboard\/analysis*/.test(path) },
+	{ title: "Billing", icon: <Payment />, uri: "/dashboard/billing", isActive: (path: string) => /^\/dashboard\/billing*/.test(path) },
+	{ title: "Settings", icon: <Settings />, uri: "/dashboard/settings", isActive: (path: string) => /^\/dashboard\/settings*/.test(path) },
 ];
 
 const Dashboard = () => {
@@ -32,18 +33,18 @@ const Dashboard = () => {
 	const [state, setState] = React.useState(false);
 
 	const list = () => (
-		<Box sx={{ width: "100%" }} role="presentation">
+		<Box component="div" sx={{ width: "100%" }} role="presentation">
 			<Logo href="/" style={{ height: 20, marginTop: theme.spacing(5), margin: theme.spacing(3) }} />
 			<List>
-				{SideBarRoutes.map(({ title, icon, uri }) => (
+				{SideBarRoutes.map(({ title, icon, uri, isActive }) => (
 					<ListItem key={title} disablePadding>
 						<ListItemButton
 							onClick={() => {
 								navigate(uri);
 							}}
 							sx={{
-								bgcolor: window.location.pathname === uri ? indigo["800"] : "transparent",
-								color: window.location.pathname === uri ? theme.palette.text.primary : theme.palette.text.secondary,
+								bgcolor: isActive(window.location.pathname) ? indigo["800"] : "transparent",
+								color: isActive(window.location.pathname) ? theme.palette.text.primary : theme.palette.text.secondary,
 							}}
 						>
 							<ListItemIcon>{icon}</ListItemIcon>
@@ -98,7 +99,7 @@ const Dashboard = () => {
 			>
 				{list()}
 			</Drawer>
-			<Box sx={{ flexGrow: 1 }}>
+			<Box component="div" sx={{ flexGrow: 1 }}>
 				{/* <Container maxWidth="lg" sx={{ pd: 0 }}>
 					<Stack direction="row-reverse" justifyContent="flex-start" alignItems="center" spacing={0}>
 						<Avatar size={60} />
