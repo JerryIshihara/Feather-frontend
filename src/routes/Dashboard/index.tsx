@@ -15,6 +15,7 @@ import { useAuth } from "../../contexts/auth";
 import { Avatar } from "../../components";
 import { Logo } from "../../components";
 import Analysis from "./analysis";
+import Setting from "./settings";
 import Video from "./videos";
 
 const SideBarRoutes = [
@@ -108,6 +109,7 @@ const Dashboard = () => {
 				<Routes>
 					<Route path="/analysis/*" element={<Analysis />} />
 					<Route path="/video/*" element={<Video />} />
+					<Route path="/settings/*" element={<Setting />} />
 				</Routes>
 			</Box>
 		</div>
