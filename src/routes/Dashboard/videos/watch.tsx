@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Container, Stack, Grid, Typography, Button, Paper, Divider, LinearProgress, Card, CardActionArea, CardMedia, Skeleton } from "@mui/material";
-import { AutoFixHigh, Insights } from "@mui/icons-material";
+import { AutoFixHigh, Insights, Delete } from "@mui/icons-material";
 import ReactCrop, { Crop } from "react-image-crop";
 
 import { extractSkeleton, getVideo } from "../../../api/video";
@@ -78,7 +78,7 @@ const Watch = () => {
 						controls
 						autoPlay
 						src={`${process.env.REACT_APP_CDN_URL}${videoObject.videoKey.S}`}
-						style={{ width: "100%", borderRadius: 8 }}
+						style={{ width: "100%", maxHeight: 800, borderRadius: 8 }}
 					/>
 				)}
 				{/* {videoObject?.skeletonKey?.S && (
@@ -121,6 +121,28 @@ const Watch = () => {
 								}}
 							>
 								Analyze
+							</Button>
+							<Divider orientation="vertical" variant="middle" flexItem />
+							<Button
+								variant="text"
+								color="primary"
+								sx={{ textTransform: "none" }}
+								startIcon={<Delete />}
+								disabled={pending}
+								onClick={() => {
+									// videoObject &&
+									// 	extractSkeleton(auth.user, videoObject["video-id"]["S"])
+									// 		.then(res => {
+									// 			console.log(res);
+									// 			setPending(true);
+									// 		})
+									// 		.catch(err => {
+									// 			console.error(err);
+									// 			setPending(false);
+									// 		});
+								}}
+							>
+								Delete
 							</Button>
 						</Stack>
 					</Paper>

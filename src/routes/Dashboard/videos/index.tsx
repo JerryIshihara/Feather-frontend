@@ -17,7 +17,7 @@ const Video = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const upload = async (event: any) => {
 		const file = event.target.files[0];
-		console.log(file);
+		// console.log(file.name.split(".").pop());
 		if (!file.type.includes("video")) {
 			alert("not a video and don't submit, just return");
 			return;
