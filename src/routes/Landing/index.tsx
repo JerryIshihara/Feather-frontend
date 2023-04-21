@@ -75,14 +75,19 @@ const LandingContent = () => {
 			>
 				<Container maxWidth="lg" style={{ padding: theme.spacing(4) }}>
 					<div style={{ textAlign: "center" }}>
-						<p style={{ fontSize: "50px", fontWeight: "700" }}>Get your high-light clip with one-click.</p>
+						<p style={{ fontSize: "50px", fontWeight: "700" }}>🎥 One-Click Highlight Reel</p>
+						<p style={{ fontSize: "20px", fontWeight: "400" }}>🚀 Save time and showcase your skills with our one-click highlight feature! ⏰</p>
+						<p style={{ fontSize: "20px", fontWeight: "400" }}>🙌 Never struggle with complex video editing tools again - create high-quality highlights with ease! 💪</p>
+
 					</div>
 				</Container>
 			</div>
 			<div>
 				<Container maxWidth="lg" style={{ padding: theme.spacing(4) }}>
 					<div style={{ textAlign: "center" }}>
-						<p style={{ fontSize: "50px", fontWeight: "700" }}>Know you badminton skills with the support of AI.</p>
+						<p style={{ fontSize: "50px", fontWeight: "700" }}>🏸️ Smash Your Way to Success: AI-powered Badminton Skill Assessment</p>
+						<p style={{ fontSize: "20px", fontWeight: "400" }}>🎮 Serve up your game with AI-assisted skill analysis ⏰</p>
+						<p style={{ fontSize: "20px", fontWeight: "400" }}>🤖️ Let AI be your coach: Assess and improve your badminton skills 💪</p>
 					</div>
 				</Container>
 			</div>
@@ -93,7 +98,9 @@ const LandingContent = () => {
 			>
 				<Container maxWidth="lg" style={{ padding: theme.spacing(4) }}>
 					<div style={{ textAlign: "center" }}>
-						<p style={{ fontSize: "50px", fontWeight: "700" }}>Want you play badminton? Book a court on our website.</p>
+						<p style={{ fontSize: "50px", fontWeight: "700" }}>🗓️ Ace your Game with Easy Court Booking</p>
+						<p style={{ fontSize: "20px", fontWeight: "400" }}>🏸 Book your court and let the games begin 🎮</p>
+						<p style={{ fontSize: "20px", fontWeight: "400" }}>👟 Get ready to play! Reserve your badminton court now 💪</p>
 					</div>
 				</Container>
 			</div>
