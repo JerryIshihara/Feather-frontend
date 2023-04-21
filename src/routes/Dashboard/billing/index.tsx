@@ -1,8 +1,8 @@
 import React from "react";
 import { useTheme, TextField, Container, FormControlLabel, Checkbox, Typography, Divider, RadioGroup, Radio, FormControl, FormLabel, Button} from "@mui/material";
 import SaveIcon from '@mui/icons-material/Save';
-import PricingTable from "./PricingTable";
-import Payment from "./Payment";
+import PricingTable from "./pricingTable";
+import Payment from "./payment";
 
 const Billing = () => {
 const theme = useTheme();

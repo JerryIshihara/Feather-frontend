@@ -21,17 +21,17 @@ const Payment = () => {
     {
       id: 'creditCard',
       label: 'Credit Card',
-      image: "../../assets/creditcard.png",
+      image: "../../../assets/creditcard.png",
     },
     {
       id: 'applePay',
       label: 'Apple Pay',
-      image: "../../assets/apple.png",
+      image: "../../../assets/apple.png",
     },
     {
       id: 'paypal',
       label: 'Paypal',
-      image: "../../assets/paypal.png",
+      image: "../../../assets/paypal.png",
     },
   ];
 
