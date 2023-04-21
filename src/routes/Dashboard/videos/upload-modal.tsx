@@ -22,6 +22,7 @@ const VideoModal = ({ file, handleClose }: { file: File | undefined; handleClose
 	const [loading, setLoading] = useState<boolean>(false);
 	useEffect(() => {
 		if (file === undefined) return;
+		console.log(file.type);
 		generateVideoThumbnail(file).then(res => {
 			console.log(res);
 			if (!!res) {
@@ -37,7 +38,7 @@ const VideoModal = ({ file, handleClose }: { file: File | undefined; handleClose
 		const thumbnailKey = `thumbnail/${uuidv4()}.png`;
 		const thumbnailResp = await fetch(thumbnail);
 		const thumbnailBlob = await thumbnailResp.blob();
-		const videoKey = `raw/${uuidv4()}.mp4`;
+		const videoKey = `raw/${uuidv4()}.${file.name.split(".").pop()}`;
 		const videoObject = {
 			username: "test",
 			title,
@@ -50,7 +51,7 @@ const VideoModal = ({ file, handleClose }: { file: File | undefined; handleClose
 			notifications.pop({ status: "error", message: "Please fill out all fields" });
 		}
 		Promise.all([
-			uploadVideo(auth.user, file, videoKey, "video/mp4"),
+			uploadVideo(auth.user, file, videoKey, file.type),
 			uploadThumbnail(auth.user, thumbnailBlob, thumbnailKey, "image/png"),
 			postVideoObject(auth.user, videoObject),
 		])
@@ -92,7 +93,7 @@ const VideoModal = ({ file, handleClose }: { file: File | undefined; handleClose
 					</IconButton>
 				</Stack>
 
-				<img alt="thumbnail" src={thumbnail} style={{ width: "100%", objectFit: "contain", marginBottom: 20 }} />
+				<img alt="thumbnail" src={thumbnail} style={{ width: "100%", height: 400, objectFit: "cover", marginBottom: 20 }} />
 				<Stack direction="column" spacing={2}>
 					<TextField
 						id="outlined-basic"
