@@ -17,6 +17,7 @@ import { Logo } from "../../components";
 import Analysis from "./analysis";
 import Setting from "./settings";
 import Video from "./videos";
+import Billing from "./billing";
 
 const SideBarRoutes = [
 	{ title: "Overview", icon: <Home />, uri: "/dashboard", isActive: (path: string) => /^\/dashboard$/.test(path) },
@@ -110,6 +111,7 @@ const Dashboard = () => {
 					<Route path="/analysis/*" element={<Analysis />} />
 					<Route path="/video/*" element={<Video />} />
 					<Route path="/settings/*" element={<Setting />} />
+					<Route path="/billing/*" element={<Billing />} />
 				</Routes>
 			</Box>
 		</div>
