@@ -50,14 +50,14 @@ return (
 				</div>
 			</Typography>
             <FormControl component="fieldset">
-				<Typography variant="subtitle1">Receive Notifications:</Typography>
+				<Typography variant="h5">Receive Notifications:</Typography>
                 <RadioGroup aria-label="notifications" name="notifications" defaultValue="email">
 					<FormControlLabel value="email" control={<Checkbox />} label="Email" />
 					<FormControlLabel value="text" control={<Checkbox />} label="Text" />
                 </RadioGroup>
             </FormControl>
 
-            <Typography variant="subtitle1">Select messages you want to receive:</Typography>
+            <Typography variant="h5">Select messages you want to receive:</Typography>
             <FormControl component="fieldset">
                 <FormControlLabel control={<Checkbox />} label="Product updates" />
                 <FormControlLabel control={<Checkbox />} label="New videos" />
@@ -76,7 +76,7 @@ return (
 					</Button>
 				</div>
 			</Typography>
-            <Typography variant="subtitle1">Select topics you're interested in:</Typography>
+            <Typography variant="h5">Select topics you're interested in:</Typography>
             <FormControl component="fieldset">
                 <FormControlLabel control={<Checkbox />} label="Skill improving" />
                 <FormControlLabel control={<Checkbox />} label="Daily sharing" />

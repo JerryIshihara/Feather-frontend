@@ -9,6 +9,9 @@ import {
   Paper,
   Radio,
 } from '@mui/material';
+import creditCardImage from './assets/creditcard.png';
+import applePayImage from './assets/apple.png';
+import paypalImage from './assets/paypal.png';
 
 const Payment = () => {
   const [selectedOption, setSelectedOption] = React.useState('creditCard');
@@ -21,17 +24,17 @@ const Payment = () => {
     {
       id: 'creditCard',
       label: 'Credit Card',
-      image: "../../../assets/creditcard.png",
+      image: creditCardImage,
     },
     {
       id: 'applePay',
       label: 'Apple Pay',
-      image: "../../../assets/apple.png",
+      image: applePayImage,
     },
     {
       id: 'paypal',
       label: 'Paypal',
-      image: "../../../assets/paypal.png",
+      image: paypalImage,
     },
   ];
 
@@ -51,7 +54,11 @@ const Payment = () => {
                 {option.label}
               </TableCell>
               <TableCell>
-                <img src={option.image} alt={option.label} />
+                <img 
+                  src={option.image} 
+                  alt={option.label} 
+                  style= {{ width: '150px', height: '50px', objectFit: 'contain' }}  
+                />
               </TableCell>
             </TableRow>
           ))}
