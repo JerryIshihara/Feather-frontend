@@ -49,21 +49,20 @@ return (
 					</Button>
 				</div>
 			</Typography>
-            <FormControl component="fieldset">
-				<Typography variant="h5">Receive Notifications:</Typography>
-                <RadioGroup aria-label="notifications" name="notifications" defaultValue="email">
-					<FormControlLabel value="email" control={<Checkbox />} label="Email" />
-					<FormControlLabel value="text" control={<Checkbox />} label="Text" />
-                </RadioGroup>
+
+			<Typography variant="h5">Receive Notifications:</Typography>
+			<FormControl component="fieldset">
+                <FormControlLabel control={<Checkbox defaultChecked />} label="Email" />
+                <FormControlLabel control={<Checkbox defaultChecked />} label="Text" />
             </FormControl>
 
             <Typography variant="h5">Select messages you want to receive:</Typography>
             <FormControl component="fieldset">
-                <FormControlLabel control={<Checkbox />} label="Product updates" />
-                <FormControlLabel control={<Checkbox />} label="New videos" />
-                <FormControlLabel control={<Checkbox />} label="New comments" />
-				<FormControlLabel control={<Checkbox />} label="Advertisements" />
-				<FormControlLabel control={<Checkbox />} label="Sport lover events and meetups" />
+                <FormControlLabel control={<Checkbox defaultChecked />} label="Product updates" />
+                <FormControlLabel control={<Checkbox defaultChecked />} label="New videos" />
+                <FormControlLabel control={<Checkbox defaultChecked />} label="New comments" />
+				<FormControlLabel control={<Checkbox defaultChecked />} label="Advertisements" />
+				<FormControlLabel control={<Checkbox defaultChecked />} label="Sport lover events and meetups" />
             </FormControl>
 
 			{/* -----------------------------------------Preference----------------------------------------- */}
@@ -78,10 +77,10 @@ return (
 			</Typography>
             <Typography variant="h5">Select topics you're interested in:</Typography>
             <FormControl component="fieldset">
-                <FormControlLabel control={<Checkbox />} label="Skill improving" />
-                <FormControlLabel control={<Checkbox />} label="Daily sharing" />
-                <FormControlLabel control={<Checkbox />} label="Sports brands" />
-				<FormControlLabel control={<Checkbox />} label="Sporting events" />
+                <FormControlLabel control={<Checkbox defaultChecked />} label="Skill improving" />
+                <FormControlLabel control={<Checkbox defaultChecked />} label="Daily sharing" />
+                <FormControlLabel control={<Checkbox defaultChecked />} label="Sports brands" />
+				<FormControlLabel control={<Checkbox defaultChecked />} label="Sporting events" />
             </FormControl>
         </Container>
     </div>
