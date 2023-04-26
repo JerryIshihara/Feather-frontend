@@ -12,7 +12,6 @@ import { Logout, Home, Movie, Settings, AutoGraph, Person, Payment } from "@mui/
 import { indigo } from "@mui/material/colors";
 
 import { useAuth } from "../../contexts/auth";
-import { Avatar } from "../../components";
 import { Logo } from "../../components";
 import Analysis from "./analysis";
 import Setting from "./settings";
