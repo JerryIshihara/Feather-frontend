@@ -76,9 +76,12 @@ const LandingContent = () => {
 				<Container maxWidth="lg" style={{ padding: theme.spacing(4) }}>
 					<div style={{ textAlign: "center" }}>
 						<p style={{ fontSize: "50px", fontWeight: "700" }}>🎥 One-Click Highlight Reel</p>
-						<p style={{ fontSize: "20px", fontWeight: "400" }}>🚀 Save time and showcase your skills with our one-click highlight feature! ⏰</p>
-						<p style={{ fontSize: "20px", fontWeight: "400" }}>🙌 Never struggle with complex video editing tools again - create high-quality highlights with ease! 💪</p>
-
+						<p style={{ fontSize: "20px", fontWeight: "400" }}>
+							🚀 Save time and showcase your skills with our one-click highlight feature! ⏰
+						</p>
+						<p style={{ fontSize: "20px", fontWeight: "400" }}>
+							🙌 Never struggle with complex video editing tools again - create high-quality highlights with ease! 💪
+						</p>
 					</div>
 				</Container>
 			</div>
