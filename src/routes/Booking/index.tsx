@@ -151,7 +151,7 @@ const Booking = () => {
 						</Typography>
 					</CardContent>
 					<CardActions sx={{ position: 'relative', bottom: 0 }}>
-						<Button size="small">Share</Button>
+						<Button size="small">Details</Button>
 						<Button size="small">Reserve</Button>
 					</CardActions>
 					</Card>

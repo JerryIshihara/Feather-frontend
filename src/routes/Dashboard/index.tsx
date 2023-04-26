@@ -8,7 +8,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Logout, Home, Movie, Settings, AutoGraph, Person, Payment } from "@mui/icons-material";
+import { Logout, Home, Movie, Settings, AutoGraph, Person, Payment, SportsTennis} from "@mui/icons-material";
 import { indigo } from "@mui/material/colors";
 
 import { useAuth } from "../../contexts/auth";
@@ -18,12 +18,14 @@ import Setting from "./settings";
 import Video from "./videos";
 import Billing from "./billing";
 import Overview from "./overview";
+import Reservations from "./reservations";
 
 const SideBarRoutes = [
 	{ title: "Overview", icon: <Home />, uri: "/dashboard", isActive: (path: string) => /^\/dashboard$/.test(path) },
 	{ title: "Profile", icon: <Person />, uri: "/dashboard/profile", isActive: (path: string) => /^\/dashboard\/profile*/.test(path) },
 	{ title: "Video", icon: <Movie />, uri: "/dashboard/video", isActive: (path: string) => /^\/dashboard\/video*/.test(path) },
 	{ title: "Analysis", icon: <AutoGraph />, uri: "/dashboard/analysis", isActive: (path: string) => /^\/dashboard\/analysis*/.test(path) },
+	{ title: "Reservations", icon: <SportsTennis />, uri: "/dashboard/reservations", isActive: (path: string) => /^\/dashboard\/reservations*/.test(path) },
 	{ title: "Billing", icon: <Payment />, uri: "/dashboard/billing", isActive: (path: string) => /^\/dashboard\/billing*/.test(path) },
 	{ title: "Settings", icon: <Settings />, uri: "/dashboard/settings", isActive: (path: string) => /^\/dashboard\/settings*/.test(path) },
 ];
@@ -112,6 +114,7 @@ const Dashboard = () => {
 					<Route path="/video/*" element={<Video />} />
 					<Route path="/settings/*" element={<Setting />} />
 					<Route path="/billing/*" element={<Billing />} />
+					<Route path="/reservations/*" element={<Reservations />} />
 					<Route path="/*" element={<Overview />} />
 				</Routes>
 			</Box>
