@@ -77,23 +77,23 @@ const Profile = () => {
 				<table style={{ borderCollapse: "collapse", border: "none", marginTop: "20px" }}>
 					<tbody style={{ lineHeight: "3em" }}>
 					<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}>Avatar: </td>
+							<td style={{ paddingRight: "5px", width: "40%" }}><b>Avatar</b></td>
 							<td style={{ width: "60%" }}><Avatar src={auth.user.attributes.picture} sx={{ width: 80, height: 80 }}/></td>
 						</tr>
 						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}>Name: </td>
+							<td style={{ paddingRight: "5px", width: "40%" }}><b>Name</b></td>
 							<td style={{ width: "60%" }}>Golden Bear</td>
 						</tr>
 						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}>Gender:</td>
+							<td style={{ paddingRight: "5px", width: "40%" }}><b>Gender</b></td>
 							<td style={{ width: "60%" }}>Rather not say</td>
 						</tr>
 						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}>Membership:</td>
+							<td style={{ paddingRight: "5px", width: "40%" }}><b>Membership</b></td>
 							<td style={{ width: "60%" }}>Free</td>
 						</tr>
 						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}>Achievements:</td>
+							<td style={{ paddingRight: "5px", width: "40%" }}><b>Achievements</b></td>
 							<td style={{ width: "60%" }}>
 							    <Tooltip title="Active Player" arrow><span> 🏅 </span></Tooltip>&nbsp;
 								<Tooltip title="Active Vlogger" arrow><span> 🥇 </span></Tooltip>&nbsp;
@@ -112,11 +112,11 @@ const Profile = () => {
 				<table style={{ borderCollapse: "collapse", border: "none", marginTop: "20px" }}>
 					<tbody style={{ lineHeight: "3em" }}>
 						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}>Email: </td>
+							<td style={{ paddingRight: "5px", width: "40%" }}><b>Email</b></td>
 							<td style={{ width: "60%" }}>golden_bear@berkeley.edu</td>
 						</tr>
 						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}>Phone Number:</td>
+							<td style={{ paddingRight: "5px", width: "40%" }}><b>Phone Number</b></td>
 							<td style={{ width: "60%" }}>510-666-6666</td>
 						</tr>
 					</tbody>
@@ -131,11 +131,11 @@ const Profile = () => {
 				<table style={{ borderCollapse: "collapse", border: "none", marginTop: "20px" }}>
 					<tbody style={{ lineHeight: "3em" }}>
 						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}>Home: </td>
+							<td style={{ paddingRight: "5px", width: "40%" }}><b>Home</b></td>
 							<td style={{ width: "60%" }}>94704 Berkeley, CA</td>
 						</tr>
 						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}>Work: </td>
+							<td style={{ paddingRight: "5px", width: "40%" }}><b>Work</b></td>
 							<td style={{ width: "60%" }}>94709 Berkeley, CA</td>
 						</tr>
 					</tbody>
