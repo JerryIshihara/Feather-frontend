@@ -135,7 +135,7 @@ const Booking = () => {
 					</Button>
 				</div>
 			</Stack>
-			<Stack direction="column" spacing={6} sx={{ py: 4 }}>
+			<Stack direction="column" spacing={6} sx={{ py: 0 }}>
 				<Box component="div" sx={{ mt: 4, display: "grid", gridTemplateColumns: { md: "1fr 1fr 1fr 1fr" }, gap: 4 }}>
 					{courts.map((card: CardData) => (
 						<Card key={card.id} sx={{ width: "100%", height: "auto", aspectRatio: "100% / 150%" }}>
