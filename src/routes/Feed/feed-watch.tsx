@@ -6,7 +6,7 @@ import { Container, Stack, Grid, Typography, Button, Paper, Divider, LinearProgr
 import { Send } from "@mui/icons-material";
 
 import {getVideo } from "../../api/video";
-import {type CommentObject, getVideoComments, addVideoComment} from "../../api/comment";
+import {type CommentObject, getVideoComments, addVideoComment, deleteVideoComment} from "../../api/comment";
 import { useAuth } from "../../contexts/auth";
 
 type VideoObject = {
@@ -41,6 +41,11 @@ const FeedWatch = () => {
         setAddingComment(false); 
     };
 
+    const deleteComment = (commentId: string) => {
+        //TODO: add logic to delete comment
+        deleteVideoComment(videoObject?.["video-id"].S, commentId);
+    };
+
 	return (
 		<Container maxWidth="lg">
 			<Stack direction="column" alignItems="center" sx={{ minHeight: "64px", mb: 3 }}>
@@ -68,11 +73,11 @@ const FeedWatch = () => {
                             {auth.user && auth.user.attributes && <Avatar src={auth.user.attributes.picture} />}
                         </Stack>
                     </Grid>
-                    <ClickAwayListener onClickAway={()=>setAddingComment(false)}>
                         <Grid item xs onClick={()=>setAddingComment(true)}>
-                            <TextField id="standard-basic" label="Add a comment" placeholder="Add a comment..." variant="standard"  fullWidth value = {newComment} onChange={e => {setNewComment(e.target.value);}}/>
+                            <ClickAwayListener onClickAway={()=>setAddingComment(false)}>
+                                <TextField id="standard-basic" label="Add a comment" placeholder="Add a comment..." variant="standard"  fullWidth value = {newComment} onChange={e => {setNewComment(e.target.value);}}/>
+                            </ClickAwayListener>
                         </Grid>
-                    </ClickAwayListener>
                     {addingComment &&
                         <Grid item xs={1}>
                             <Stack direction="row" justifyContent="flex-end" sx={{ pt:1 }}>

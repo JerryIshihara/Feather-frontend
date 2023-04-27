@@ -41,6 +41,6 @@ export const addVideoComment = (videoId: string | undefined, comment: string) =>
 };
 
 
-export const deleteVideoComment = (videoId: string, commentId: string) => {
+export const deleteVideoComment = (videoId: string| undefined, commentId: string) => {
     //TODO: delete specific comment
 };
