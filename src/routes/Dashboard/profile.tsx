@@ -126,17 +126,29 @@ const Profile = () => {
 			{/********************************************** Addresses **********************************************/}
 			<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: 5 }}>
 				<Typography variant="h4" sx={{ fontWeight: "bold" }}>
-					Addresses
+					Address
 				</Typography>
 				<table style={{ borderCollapse: "collapse", border: "none", marginTop: "20px" }}>
 					<tbody style={{ lineHeight: "3em" }}>
 						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}><b>Home</b></td>
-							<td style={{ width: "60%" }}>94704 Berkeley, CA</td>
+							<td style={{ paddingRight: "5px", width: "40%" }}><b>Street Address</b></td>
+							<td style={{ width: "60%" }}>123 Main Street</td>
 						</tr>
 						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}><b>Work</b></td>
-							<td style={{ width: "60%" }}>94709 Berkeley, CA</td>
+							<td style={{ paddingRight: "5px", width: "40%" }}><b>City</b></td>
+							<td style={{ width: "60%" }}>Berkeley</td>
+						</tr>
+						<tr>
+							<td style={{ paddingRight: "5px", width: "40%" }}><b>State/Province</b></td>
+							<td style={{ width: "60%" }}>California</td>
+						</tr>
+						<tr>
+							<td style={{ paddingRight: "5px", width: "40%" }}><b>Postal Code</b></td>
+							<td style={{ width: "60%" }}>94709</td>
+						</tr>
+						<tr>
+							<td style={{ paddingRight: "5px", width: "40%" }}><b>Country</b></td>
+							<td style={{ width: "60%" }}>U.S.A</td>
 						</tr>
 					</tbody>
 				</table>

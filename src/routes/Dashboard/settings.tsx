@@ -115,6 +115,23 @@ const Setting = () => {
 						</FormControl>
 					</Stack>
 				</Stack>
+
+				{/* -----------------------------------------Addresses----------------------------------------- */}
+				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, backgroundColor: theme.palette.background.default, p: 5 }}>
+					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+					Address
+						<div style={{ float: "right" }}>
+							<Button variant="contained" startIcon={<SaveIcon />} component="span">
+								Save
+							</Button>
+						</div>
+					</Typography>
+					<TextField label="Street Address" required margin="normal" variant="outlined" fullWidth />
+					<TextField label="City" required margin="normal" variant="outlined" fullWidth />
+					<TextField label="State/Province" required margin="normal" variant="outlined" fullWidth />
+					<TextField label="Postal Code" required margin="normal" variant="outlined" fullWidth />
+					<TextField label="Country" required margin="normal" variant="outlined" fullWidth />
+				</Stack>
 			</Stack>
 		</Container>
 	);
