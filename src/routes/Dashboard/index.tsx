@@ -19,6 +19,7 @@ import Video from "./videos";
 import Billing from "./billing";
 import Overview from "./overview";
 import Reservations from "./reservations";
+import Profile from "./profile";
 
 const SideBarRoutes = [
 	{ title: "Overview", icon: <Home />, uri: "/dashboard", isActive: (path: string) => /^\/dashboard$/.test(path) },
@@ -115,6 +116,7 @@ const Dashboard = () => {
 					<Route path="/settings/*" element={<Setting />} />
 					<Route path="/billing/*" element={<Billing />} />
 					<Route path="/reservations/*" element={<Reservations />} />
+					<Route path="/profile/*" element={<Profile />} />
 					<Route path="/*" element={<Overview />} />
 				</Routes>
 			</Box>
