@@ -108,7 +108,7 @@ const LandingPage = () => {
 			<Header />
 			<Routes>
 				<Route path="/" element={<LandingContent />} />
-				<Route path="/feed" element={<Feed />} />
+				<Route path="/feed/*" element={<Feed />} />
 				<Route path="/booking" element={<Booking />} />
 				<Route path="/pricing" element={<Pricing />} />
 			</Routes>
