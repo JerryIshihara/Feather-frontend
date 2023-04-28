@@ -5,7 +5,7 @@ import { Upload, AutoAwesome, Close } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 // Define the VideoObject interface
-const VideoThumbnail = (props: { videoObject: any }) => {
+const VideoThumbnail = (props: { videoObject: any, navigationPath: string}) => {
 	const theme = useTheme();
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState<boolean>(true);
@@ -14,7 +14,7 @@ const VideoThumbnail = (props: { videoObject: any }) => {
 			<CardActionArea
 				disabled={loading}
 				onClick={() => {
-					navigate(`/dashboard/video/watch?v=${props.videoObject["video-id"]["S"]}`, { state: { videoObject: props.videoObject } });
+					navigate(props.navigationPath + `watch?v=${props.videoObject["video-id"]["S"]}`, { state: { videoObject: props.videoObject } });
 				}}
 			>
 				{loading && <Skeleton sx={{ height: 194 }} animation="wave" variant="rectangular" />}
