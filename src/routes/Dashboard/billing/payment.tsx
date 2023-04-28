@@ -1,8 +1,8 @@
 import React from "react";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Radio } from "@mui/material";
-import creditcard from "../../../assets/creditcard.png";
-import paypal from "../../../assets/paypal.png";
-import apple from "../../../assets/apple.png";
+import creditCardImage from "./assets/creditcard.png";
+import applePayImage from "../../../assets/applepay.png";
+import paypalImage from "./assets/paypal.png";
 
 const Payment = () => {
 	const [selectedOption, setSelectedOption] = React.useState("creditCard");
@@ -15,17 +15,17 @@ const Payment = () => {
 		{
 			id: "creditCard",
 			label: "Credit Card",
-			image: creditcard,
+			image: creditCardImage,
 		},
 		{
 			id: "applePay",
 			label: "Apple Pay",
-			image: apple,
+			image: applePayImage,
 		},
 		{
 			id: "paypal",
 			label: "Paypal",
-			image: paypal,
+			image: paypalImage,
 		},
 	];
 
@@ -39,8 +39,8 @@ const Payment = () => {
 								<Radio checked={selectedOption === option.id} onChange={handleChange} value={option.id} name="payment-radio-button" />
 								{option.label}
 							</TableCell>
-							<TableCell>
-								<img src={option.image} alt={option.label} style={{ height: 40, objectFit: "contain" }} />
+							<TableCell sx={{ justifyContent: "flex-end" }}>
+								<img src={option.image} alt={option.label} style={{ height: "30px", objectFit: "contain" }} />
 							</TableCell>
 						</TableRow>
 					))}

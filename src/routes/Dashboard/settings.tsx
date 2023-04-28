@@ -1,91 +1,140 @@
 import React from "react";
-import { useTheme, TextField, Container, FormControlLabel, Checkbox, Typography, Divider, RadioGroup, Radio, FormControl, FormLabel, Button} from "@mui/material";
-import SaveIcon from '@mui/icons-material/Save';
+import {
+	useTheme,
+	TextField,
+	Container,
+	FormControlLabel,
+	Checkbox,
+	Typography,
+	Divider,
+	RadioGroup,
+	Radio,
+	FormControl,
+	FormLabel,
+	Button,
+	Stack,
+} from "@mui/material";
+import SaveIcon from "@mui/icons-material/Save";
 
 const Setting = () => {
-const theme = useTheme();
+	const theme = useTheme();
 
-return (
-    <div style={{ backgroundColor: theme.palette.background.default, padding: theme.spacing(4) }}>
-        <Container maxWidth="lg">
+	return (
+		<Container maxWidth="lg">
+			<Stack direction="column" spacing={6} sx={{ py: 4 }}>
+				{/* -----------------------------------------Password----------------------------------------- */}
+				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: 5 }}>
+					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+						Change Password
+						<div style={{ float: "right" }}>
+							<Button variant="contained" startIcon={<SaveIcon />} component="span">
+								Save
+							</Button>
+						</div>
+					</Typography>
 
-			{/* -----------------------------------------Password----------------------------------------- */}
-			<Typography variant="h4" gutterBottom>
-				Change Password
-				<div style={{ float: 'right' }}>
-					<Button variant="contained" sx={{ color: theme.palette.text.primary }} startIcon={<SaveIcon />} component="span">
-						Save
-					</Button>
-				</div>
-				<div>
-					<TextField label="Current Password" required type="password" margin="normal" variant="outlined" fullWidth />
-					<TextField label="New Password" type="password" margin="normal" variant="outlined" fullWidth inputProps={{ minLength: 8 }} />
-					<TextField label="Confirm New Password" type="password" margin="normal" variant="outlined" fullWidth inputProps={{ minLength: 8 }} />
-				</div>
-			</Typography>
+					<div>
+						<TextField label="Current Password" required type="password" margin="normal" variant="outlined" fullWidth />
+						<TextField label="New Password" type="password" margin="normal" variant="outlined" fullWidth inputProps={{ minLength: 8 }} />
+						<TextField
+							label="Confirm New Password"
+							type="password"
+							margin="normal"
+							variant="outlined"
+							fullWidth
+							inputProps={{ minLength: 8 }}
+						/>
+					</div>
+				</Stack>
 
-			{/* -----------------------------------------Contact Info----------------------------------------- */}
-			<Divider style={{ margin: theme.spacing(2, 0) }} />
-			<Typography variant="h4" gutterBottom>
-				Contact Information
-				<div style={{ float: 'right' }}>
-					<Button variant="contained" sx={{ color: theme.palette.text.primary }} startIcon={<SaveIcon />} component="span">
-						Save
-					</Button>
-				</div>
-				<div>
-					<TextField label="Email" required type="email" margin="normal" variant="outlined" fullWidth/>
-					<TextField label="Phone Number" type="tel" margin="normal" variant="outlined" fullWidth/>
-				</div>
-			</Typography>
+				{/* -----------------------------------------Contact Info----------------------------------------- */}
+				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, backgroundColor: theme.palette.background.default, p: 5 }}>
+					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+						Contact Information
+						<div style={{ float: "right" }}>
+							<Button variant="contained" startIcon={<SaveIcon />} component="span">
+								Save
+							</Button>
+						</div>
+					</Typography>
 
-			{/* -----------------------------------------Notification----------------------------------------- */}
-            <Divider style={{ margin: theme.spacing(2, 0) }} />
-            <Typography variant="h4" gutterBottom>
-				Notifications
-				<div style={{ float: 'right' }}>
-					<Button variant="contained" sx={{ color: theme.palette.text.primary }} startIcon={<SaveIcon />} component="span">
-						Save
-					</Button>
-				</div>
-			</Typography>
-            <FormControl component="fieldset">
-				<Typography variant="subtitle1">Receive Notifications:</Typography>
-                <RadioGroup aria-label="notifications" name="notifications" defaultValue="email">
-					<FormControlLabel value="email" control={<Checkbox />} label="Email" />
-					<FormControlLabel value="text" control={<Checkbox />} label="Text" />
-                </RadioGroup>
-            </FormControl>
+					<div>
+						<TextField label="Email" required type="email" margin="normal" variant="outlined" fullWidth />
+						<TextField label="Phone Number" type="tel" margin="normal" variant="outlined" fullWidth />
+					</div>
+				</Stack>
 
-            <Typography variant="subtitle1">Select messages you want to receive:</Typography>
-            <FormControl component="fieldset">
-                <FormControlLabel control={<Checkbox />} label="Product updates" />
-                <FormControlLabel control={<Checkbox />} label="New videos" />
-                <FormControlLabel control={<Checkbox />} label="New comments" />
-				<FormControlLabel control={<Checkbox />} label="Advertisements" />
-				<FormControlLabel control={<Checkbox />} label="Sport lover events and meetups" />
-            </FormControl>
+				{/* -----------------------------------------Addresses----------------------------------------- */}
+				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, backgroundColor: theme.palette.background.default, p: 5 }}>
+					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+					Address
+						<div style={{ float: "right" }}>
+							<Button variant="contained" startIcon={<SaveIcon />} component="span">
+								Save
+							</Button>
+						</div>
+					</Typography>
+					<TextField label="Street Address" required margin="normal" variant="outlined" fullWidth />
+					<TextField label="City" required margin="normal" variant="outlined" fullWidth />
+					<TextField label="State/Province" required margin="normal" variant="outlined" fullWidth />
+					<TextField label="Postal Code" required margin="normal" variant="outlined" fullWidth />
+					<TextField label="Country" required margin="normal" variant="outlined" fullWidth />
+				</Stack>
 
-			{/* -----------------------------------------Preference----------------------------------------- */}
-            <Divider style={{ margin: theme.spacing(2, 0) }} />
-            <Typography variant="h4" gutterBottom>
-				Preference
-				<div style={{ float: 'right' }}>
-					<Button variant="contained" sx={{ color: theme.palette.text.primary }} startIcon={<SaveIcon />} component="span">
-						Save
-					</Button>
-				</div>
-			</Typography>
-            <Typography variant="subtitle1">Select topics you're interested in:</Typography>
-            <FormControl component="fieldset">
-                <FormControlLabel control={<Checkbox />} label="Skill improving" />
-                <FormControlLabel control={<Checkbox />} label="Daily sharing" />
-                <FormControlLabel control={<Checkbox />} label="Sports brands" />
-				<FormControlLabel control={<Checkbox />} label="Sporting events" />
-            </FormControl>
-        </Container>
-    </div>
-  );
+				{/* -----------------------------------------Notification----------------------------------------- */}
+				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, backgroundColor: theme.palette.background.default, p: 5 }}>
+					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+						Notifications
+						<div style={{ float: "right" }}>
+							<Button variant="contained" startIcon={<SaveIcon />} component="span">
+								Save
+							</Button>
+						</div>
+					</Typography>
+
+					<Stack direction="column" spacing={2}>
+						<Typography variant="h6">Receive Notifications:</Typography>
+						<FormControl component="fieldset">
+							<FormControlLabel control={<Checkbox defaultChecked />} label="Email" />
+							<FormControlLabel control={<Checkbox defaultChecked />} label="Text" />
+						</FormControl>
+					</Stack>
+
+					<Stack direction="column" spacing={2}>
+						<Typography variant="h6">Select messages you want to receive:</Typography>
+						<FormControl component="fieldset">
+							<FormControlLabel control={<Checkbox defaultChecked />} label="Product updates" />
+							<FormControlLabel control={<Checkbox defaultChecked />} label="New videos" />
+							<FormControlLabel control={<Checkbox defaultChecked />} label="New comments" />
+							<FormControlLabel control={<Checkbox defaultChecked />} label="Advertisements" />
+							<FormControlLabel control={<Checkbox defaultChecked />} label="Sport lover events and meetups" />
+						</FormControl>
+					</Stack>
+				</Stack>
+
+				{/* -----------------------------------------Preference----------------------------------------- */}
+				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, backgroundColor: theme.palette.background.default, p: 5 }}>
+					<Typography variant="h4" sx={{ fontWeight: "bold" }} gutterBottom>
+						Preferences
+						<div style={{ float: "right" }}>
+							<Button variant="contained" startIcon={<SaveIcon />} component="span">
+								Save
+							</Button>
+						</div>
+					</Typography>
+					<Stack direction="column" spacing={2}>
+						<Typography variant="h6">Select topics you're interested in:</Typography>
+						<FormControl component="fieldset">
+							<FormControlLabel control={<Checkbox defaultChecked />} label="Skill improving" />
+							<FormControlLabel control={<Checkbox defaultChecked />} label="Daily sharing" />
+							<FormControlLabel control={<Checkbox defaultChecked />} label="Sports brands" />
+							<FormControlLabel control={<Checkbox defaultChecked />} label="Sporting events" />
+						</FormControl>
+					</Stack>
+				</Stack>
+			</Stack>
+		</Container>
+	);
 };
 
 export default Setting;

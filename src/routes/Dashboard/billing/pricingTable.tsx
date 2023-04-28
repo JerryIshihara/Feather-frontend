@@ -9,10 +9,10 @@ const PricingTable = () => {
   };
 
   const options = [
-    {id: 'premium', price: '$29.99 / month', description: ['Access to training videos', 'Video editing tools', 'Expert analysis']},
-    {id: 'pro', price: '$19.99 / month', description: ['Access to training videos', 'Video editing tools', 'Advanced analysis']},
-    {id: 'basic', price: '$9.99 / month', description: ['Access to training videos', 'Video editing tools', 'Basic analysis']},
-    {id: 'free', price: '$0.00 / month', description: ['Access to training videos', 'Video editing tools']},
+    {id: 'premium', price: '$29.99 / month', description: ["Video upload for replay", "Sports advanced analysis", "Unlimited AI editing usage", "Team colloration"]},
+    {id: 'pro', price: '$19.99 / month', description: ["Video upload for replay", "Sports performance analysis", "Unlimited AI editing usage"]},
+    {id: 'basic', price: '$9.99 / month', description: ["Video upload for replay", "Limited sports performance analysis", "Limited AI editing usage"]},
+    {id: 'free', price: '$0.00 / month', description: ["Video upload for replay", "Limited sports performance analysis", "Limited AI editing usage"]},
   ];
 
   return (
