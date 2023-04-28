@@ -70,7 +70,7 @@ const Video = () => {
 						) : (
 							<Box component="div" sx={{ mt: theme.spacing(4), display: "grid", gridTemplateColumns: { md: "1fr 1fr 1fr" }, gap: 4 }}>
 								{videos.map(item => (
-									<VideoThumbnail key={item["video-id"]["S"]} videoObject={item} />
+									<VideoThumbnail key={item["video-id"]["S"]} videoObject={item} navigationPath = '/dashboard/video/'/>
 								))}
 							</Box>
 						)}
