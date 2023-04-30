@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -7,9 +7,6 @@ import Button from "@mui/material/Button";
 import SearchIcon from '@mui/icons-material/Search';
 import Typography from "@mui/material/Typography";
 import { Box, Container, useTheme, Stack, MenuItem, TextField} from "@mui/material";
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 // Remove in the future
 import court1 from "./assets/court1.jpg";
@@ -20,96 +17,96 @@ import court5 from "./assets/court5.jpg";
 
 type CardData = {
 	id: number;
-	title: string;
-	image?: string;
+	field_name: string;
+	court_number: string;
+	date: string;
+	start_time: string;
+	end_time: string;
+	address:  string;
+	price: string;
 	description: string;
-	time: string;
+	image?: string;
 };
 
+const loadCourtInfo = () =>{
+	
+}
+
 const Booking = () => {
-	const [courts, setCourts] = React.useState<CardData[]>([
-		{
-			id: 1,
-			title: "Eastbay Badminton",
-			image: court3,
-			description: "There are 8 badminton courts. They are clean and spacious.",
-			time: "4/25 Tues 1:00 am - 2:00 am",
-		},
-		{
-			id: 2,
-			title: "Eastbay Badminton",
-			image: court3,
-			description: "There are 8 badminton courts. They are clean and spacious.",
-			time: "4-26 Wes 7:00 pm - 9:00 pm",
-		},
-		{
-			id: 3,
-			title: "Eastbay Badminton",
-			image: court3,
-			description: "There are 8 badminton courts. They are clean and spacious.",
-			time: "4-26 Wes 8:00 am - 9:00 am",
-		},
-		{
-			id: 4,
-			title: "Elite Badminton",
-			image: court1,
-			description: "There are 8 badminton courts. They are clean and spacious.",
-			time: "4/27 Thurs 10:00 am - 11:00 am",
-		},
-		{
-			id: 5,
-			title: "Elite Badminton",
-			image: court1,
-			description: "There are 8 badminton courts. They are clean and spacious.",
-			time: "4/25 Tues 1:00 am - 2:00 am",
-		},
-		{
-			id: 6,
-			title: "Bintang Badminton",
-			image: court2,
-			description: "There are 8 badminton courts. They are clean and spacious.",
-			time: "4/28 Fri 11:00 am - 12:00 am",
-		},
-		{
-			id: 7,
-			title: "Bintang Badminton",
-			image: court2,
-			description: "There are 8 badminton courts. They are clean and spacious.",
-			time: "4/25 Tues 1:00 am - 2:00 am",
-		},
-		{
-			id: 8,
-			title: "Bay Badminton",
-			image: court4,
-			description: "There are 8 badminton courts. They are clean and spacious.",
-			time: "4/29 Sat 11:00 am - 12:00 am",
-		},
-		{
-			id: 9,
-			title: "Synergy Badminton",
-			image: court5,
-			description: "There are 8 badminton courts. They are clean and spacious.",
-			time: "4/30 Sun 8:00 am - 10:00 am",
-		},
-		{
-			id: 10,
-			title: "Synergy Badminton",
-			image: court5,
-			description: "There are 8 badminton courts. They are clean and spacious.",
-			time: "4/30 Sun 11:00 am - 12:00 am",
-		},
-	]);
-
+	const [courts, setCourts] = useState<CardData[]>([]);
 	const [selectedCourt, setSelectedCourt] = useState<string>("");
-	const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
-	// const handleDateChange = (date: Date | null) => {
-	//   setSelectedDate(date);
-	// };
   
-	const handleCourtChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-	  setSelectedCourt(event.target.value);
-	};
+	useEffect(() => {
+		const fetchCourts = async () => {
+		  try {
+			// http://localhost:8000/api/booking/search?name=${selectedCourt}
+			const response = await fetch(`http://localhost:8000/api/booking/search?name=${selectedCourt}`);
+			const data = await response.json();
+
+			const courtsWithImages = data.courts.map((court: CardData) => {
+				let image;
+				switch (court.field_name) {
+				  case "Elite Badminton":
+					image = court1;
+					break;
+				  case "Eastbay Badminton":
+					image = court2;
+					break;
+				  case "Bintang Badminton":
+					image = court3;
+					break;
+				  case "Synergy Badminton":
+					image = court4;
+					break;
+				  default:
+					image = court5;
+				}
+				return { ...court, image };
+			  });
+			setCourts(courtsWithImages);
+		  } catch (error) {
+			console.error(error);
+		  }
+		};
+	
+		fetchCourts();
+	  }, [selectedCourt]);
+	
+	const handleSearchClick = () => {
+		const fetchCourts = async () => {
+		  try {
+			// http://localhost:8000/api/booking/search?name=${selectedCourt}
+			const response = await fetch(`/api/booking/search?name=${selectedCourt}`);
+			const data = await response.json();
+
+			const courtsWithImages = data.courts.map((court: CardData) => {
+				let image;
+				switch (court.field_name) {
+				  case "Elite Badminton":
+					image = court1;
+					break;
+				  case "Eastbay Badminton":
+					image = court2;
+					break;
+				  case "Bintang Badminton":
+					image = court3;
+					break;
+				  case "Synergy Badminton":
+					image = court4;
+					break;
+				  default:
+					image = court5;
+				}
+				return { ...court, image };
+			  });
+			setCourts(courtsWithImages);
+		  } catch (error) {
+			console.error(error);
+		  }
+		};
+	
+		fetchCourts();
+	  };
 
 	return (
 		<Container maxWidth="lg">
@@ -130,7 +127,7 @@ const Booking = () => {
 						))}
 					</TextField>
 
-					<Button variant="contained" startIcon={<SearchIcon />} component="span">
+					<Button variant="contained" startIcon={<SearchIcon />} component="span" onClick={handleSearchClick}>
 						Search
 					</Button>
 				</div>
@@ -139,16 +136,16 @@ const Booking = () => {
 				<Box component="div" sx={{ mt: 4, display: "grid", gridTemplateColumns: { md: "1fr 1fr 1fr 1fr" }, gap: 4 }}>
 					{courts.map((card: CardData) => (
 						<Card key={card.id} sx={{ width: "100%", height: "auto", aspectRatio: "100% / 150%" }}>
-							<CardMedia component="img" alt={card.title} height="140" image={card.image || "court.jpg"} />
+							<CardMedia component="img" alt={card.field_name} height="140" image={card.image || "court.jpg"} />
 							<CardContent>
 								<Typography gutterBottom variant="h5" component="div">
-									{card.title}
+									{card.field_name}
 								</Typography>
 								<Typography variant="body2" color="text.secondary">
 									{card.description}
 								</Typography>
 								<Typography variant="body2" color="text.secondary">
-									{card.time}
+									{card.date} &nbsp; {card.start_time} - {card.end_time}
 								</Typography>
 							</CardContent>
 							<CardActions sx={{ position: "relative", bottom: 0 }}>
