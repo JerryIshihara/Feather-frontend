@@ -7,12 +7,14 @@ import { useNotification } from "./notification";
 interface AuthContextProps {
 	user?: object | null;
 	loading: boolean;
+	plan: string | undefined;
 	signout: () => Promise<any>;
 	signup: (email: string, password: string) => Promise<any>;
 	login: (email: string, password: string) => Promise<any>;
 	confirmSignUp: (email: string, code: string) => Promise<any>;
 	resendConfirmationCode: (email: string) => Promise<any>;
 	loginWithGoogle: () => Promise<any>;
+	subscribe: (plan: string) => Promise<any>;
 	// loginWithApple: () => void;
 	// loginWithCryptoWallet: () => void;
 }
@@ -23,6 +25,7 @@ export const AuthContextProvider = (props: any) => {
 	const notification = useNotification();
 	const loader = useLoading();
 	const [user, setUser] = useState<object | null>(null);
+	const [plan, setPlan] = useState<string>("");
 	const [loading, setLoading] = useState<boolean>(false);
 
 	// async function getUser() {
@@ -166,6 +169,15 @@ export const AuthContextProvider = (props: any) => {
 			loader.hide();
 		}
 	};
+
+	const subscribe = async (newPlan: string) => {
+		return new Promise(resolve => {
+			setTimeout(() => {
+				setPlan(newPlan);
+				resolve("success");
+			}, 2000);
+		});
+	};
 	// const loginWithApple = async () => {
 	// 	const { wallet } = await Web3Auth.appleLogin();
 	// 	const signMessage = async (m: string) => await wallet.signMessage(m);
@@ -178,6 +190,7 @@ export const AuthContextProvider = (props: any) => {
 		<AuthContext.Provider
 			value={{
 				user,
+				plan,
 				loading,
 				signout,
 				signup,
@@ -185,6 +198,7 @@ export const AuthContextProvider = (props: any) => {
 				confirmSignUp,
 				resendConfirmationCode,
 				loginWithGoogle,
+				subscribe,
 				// loginWithApple,
 				// getTokenFromSecureStore,
 			}}
