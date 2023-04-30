@@ -30,7 +30,7 @@ const Pricing = () => {
 				</Typography>
 			</Stack>
 			<Grid container spacing={4}>
-				{plans.map(plan => (
+				{plans.map((plan: any) => (
 					<Grid item xs={12} md={4}>
 						<PricingCard
 							title={plan.title}
