@@ -8,7 +8,6 @@ import Typography from "@mui/material/Typography";
 import { useAuth } from "../../contexts/auth";
 import {DialogContentText, DialogTitle, Box, Container, Dialog, Stack, MenuItem, TextField, DialogContent, DialogActions} from "@mui/material";
 
-// Remove in the future
 import court1 from "./assets/court1.jpg";
 import court2 from "./assets/court2.jpg";
 import court3 from "./assets/court3.jpg";
