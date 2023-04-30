@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./Landing";
 import Auth from "./Auth";
 import Dashboard from "./Dashboard";
+import Payment from "./Payment";
 import { Private, Modal, Notification } from "../components";
 
 function App() {
@@ -20,6 +21,14 @@ function App() {
 							<Private>
 								<Dashboard />
 							</Private>
+						}
+					/>
+					<Route
+						path="/payment"
+						element={
+							// <Private>
+							<Payment />
+							// {/* </Private> */}
 						}
 					/>
 					<Route path="/*" element={<Landing />} />

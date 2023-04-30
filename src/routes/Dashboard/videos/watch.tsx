@@ -1,12 +1,65 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useRef, createRef } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
-import { Container, Stack, Grid, Typography, Button, Paper, Divider, LinearProgress, Card, CardActionArea, CardMedia, Skeleton } from "@mui/material";
+import {
+	Container,
+	Stack,
+	Grid,
+	Typography,
+	Button,
+	Paper,
+	Divider,
+	LinearProgress,
+	Card,
+	CardActionArea,
+	CardMedia,
+	Skeleton,
+	Box,
+} from "@mui/material";
 import { AutoFixHigh, Insights, Delete } from "@mui/icons-material";
-import ReactCrop, { Crop } from "react-image-crop";
+import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, Title, LinearScale, CategoryScale } from "chart.js";
+import { Radar, Line } from "react-chartjs-2";
+import { faker } from "@faker-js/faker";
 
 import { extractSkeleton, getVideo } from "../../../api/video";
 import { useAuth } from "../../../contexts/auth";
 import { getCroppedImg } from "../../../utils/video";
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
+
+const options = {
+	plugins: {
+		legend: {
+			labels: {
+				color: "white",
+				font: {
+					size: 14, // Set the font size for the legend labels
+				},
+			},
+		},
+		tooltip: {
+			bodyFont: {
+				size: 14, // Set the font size for the tooltip labels
+			},
+		},
+	},
+	scales: {
+		r: {
+			grid: {
+				color: "",
+			},
+			pointLabels: {
+				color: "white",
+				font: {
+					size: 12, // Set the font size for the legend labels
+				},
+			},
+			ticks: {
+				display: false,
+			},
+		},
+	},
+};
 
 const crops = {
 	"4.0": { bbox_left: 1031.0, bbox_top: 317.0, bbox_w: 59.0, bbox_h: 70.0 },
@@ -29,6 +82,8 @@ const Watch = () => {
 	const auth = useAuth();
 	const [videoObject, setVideoObject] = React.useState<VideoObject>();
 	const [pending, setPending] = React.useState(false);
+	const videoRef = useRef(null);
+	const [ctime, setCTime] = React.useState(0);
 	const [crop, setCrop] = React.useState<any>({
 		unit: "px", // Can be 'px' or '%'
 		x: 832,
@@ -38,6 +93,44 @@ const Watch = () => {
 		id: 0,
 	});
 	const [croppedImgs, setCroppedImgs] = React.useState<Array<any>>([]);
+	const [speedData, setSpeedData] = React.useState<any>(0);
+	const [charjsdata, setCharjsdata] = React.useState<any>({
+		labels: ["Drop", "Smash/Clear", "Moving"],
+		datasets: [
+			{
+				label: "Pose classification",
+				data: [1, 1, 1],
+			},
+		],
+	});
+
+	const randomSpeedDataUpdate = () => {
+		if (!videoRef || !videoRef.current) return;
+		const currentTime = (videoRef.current as any).currentTime; // Current playback time in seconds
+		if (Math.floor(currentTime) <= ctime) return;
+		setSpeedData(Math.floor(Math.random() * 100));
+		setCTime(Math.floor(currentTime));
+	};
+	const randomUpdate = () => {
+		let dataList = [];
+		let tot = 0;
+		for (var i = 0; i < 3; i++) {
+			dataList.push(Math.floor(Math.random() * 100));
+			tot += dataList[i];
+		}
+		setCharjsdata({
+			labels: ["Drop", "Smash/Clear", "Moving"],
+			datasets: [
+				{
+					label: "Pose classification",
+					data: dataList.map(d => d / tot),
+					backgroundColor: "rgba(255, 99, 132, 0.2)",
+					borderColor: "rgba(255, 99, 132, 1)",
+					borderWidth: 1,
+				},
+			],
+		});
+	};
 
 	useEffect(() => {
 		if (videoObject && croppedImgs.length === 0) {
@@ -72,81 +165,48 @@ const Watch = () => {
 
 	return (
 		<Container maxWidth="lg">
-			<Stack direction="column" alignItems="center" sx={{ minHeight: "64px", mb: 3 }}>
-				{videoObject && (
-					<video
-						controls
-						autoPlay
-						src={`${process.env.REACT_APP_CDN_URL}${videoObject.videoKey.S}`}
-						style={{ width: "100%", maxHeight: 800, borderRadius: 8 }}
-					/>
-				)}
-				{/* {videoObject?.skeletonKey?.S && (
-					<video
-						controls
-						autoPlay
-						src={`${process.env.REACT_APP_CDN_URL}${videoObject?.skeletonKey?.S}`}
-						style={{ width: "100%", borderRadius: 8 }}
-					/>
-				)} */}
-			</Stack>
-			<Stack direction="row" alignItems="center" sx={{ minHeight: "64px", mb: 3 }} spacing={2}>
-				<Grid item xs>
+			<Stack direction={{ sm: "column", md: "row" }} sx={{ minHeight: "500px", mb: 3, py: 4 }} spacing={4}>
+				<Stack direction="column" spacing={2} sx={{ flex: 3 }}>
+					<Box component="div">
+						{videoObject && (
+							<video
+								ref={videoRef}
+								controls
+								autoPlay
+								src={`${process.env.REACT_APP_CDN_URL}${videoObject.videoKey.S}`}
+								style={{ width: "100%", borderRadius: 8 }}
+								onCanPlay={() => {
+									setCTime(0);
+									setSpeedData(0);
+								}}
+								onTimeUpdate={() => {
+									requestAnimationFrame(() => {
+										randomUpdate();
+										randomSpeedDataUpdate();
+									});
+								}}
+							/>
+						)}
+					</Box>
 					<Typography variant="h5">{videoObject?.title.S}</Typography>
-				</Grid>
-				<Grid item xs="auto" sx={{ justifyContent: "end" }}>
-					<Paper elevation={3} sx={{ px: 5, borderRadius: 2 }}>
-						<Stack direction="row" alignItems="center" justifyItems="center" sx={{ minHeight: "64px" }} spacing={5}>
-							<Button variant="text" color="primary" sx={{ textTransform: "none" }} startIcon={<AutoFixHigh />}>
-								AI Edit
-							</Button>
-							<Divider orientation="vertical" variant="middle" flexItem />
-							<Button
-								variant="text"
-								color="primary"
-								sx={{ textTransform: "none" }}
-								startIcon={<Insights />}
-								disabled={pending}
-								onClick={() => {
-									videoObject &&
-										extractSkeleton(auth.user, videoObject["video-id"]["S"])
-											.then(res => {
-												console.log(res);
-												setPending(true);
-											})
-											.catch(err => {
-												console.error(err);
-												setPending(false);
-											});
-								}}
-							>
-								Analyze
-							</Button>
-							<Divider orientation="vertical" variant="middle" flexItem />
-							<Button
-								variant="text"
-								color="primary"
-								sx={{ textTransform: "none" }}
-								startIcon={<Delete />}
-								disabled={pending}
-								onClick={() => {
-									// videoObject &&
-									// 	extractSkeleton(auth.user, videoObject["video-id"]["S"])
-									// 		.then(res => {
-									// 			console.log(res);
-									// 			setPending(true);
-									// 		})
-									// 		.catch(err => {
-									// 			console.error(err);
-									// 			setPending(false);
-									// 		});
-								}}
-							>
-								Delete
-							</Button>
-						</Stack>
-					</Paper>
-				</Grid>
+				</Stack>
+				<Box component="div" sx={{ flex: 1 }}>
+					<Stack direction="column" sx={{ minHeight: "64px", mb: 3 }} spacing={4}>
+						<Paper elevation={3} sx={{ px: 5, py: 3, borderRadius: 2 }}>
+							<Radar
+								options={options}
+								data={charjsdata}
+								//   {...props}
+							/>
+						</Paper>
+						<Paper elevation={3} sx={{ px: 5, py: 3, borderRadius: 2 }}>
+							<Stack direction="column" alignItems="center" spacing={2}>
+								<Typography variant="h6">Moving Speed</Typography>
+								<Typography variant="h1">{speedData}</Typography>
+							</Stack>
+						</Paper>
+					</Stack>
+				</Box>
 			</Stack>
 			{pending && (
 				<Stack direction="row" alignItems="center" sx={{ minHeight: "64px" }} spacing={2}>
@@ -160,7 +220,7 @@ const Watch = () => {
 					</Grid>
 				</Stack>
 			)}
-			<Paper elevation={3} sx={{ px: 5, py: 3, borderRadius: 2 }}>
+			{/* <Paper elevation={3} sx={{ px: 5, py: 3, borderRadius: 2 }}>
 				<Typography variant="h6" sx={{ mb: 2 }}>
 					Which one is you?
 				</Typography>
@@ -170,26 +230,12 @@ const Watch = () => {
 							<Card key={i} sx={{ height: 200 }}>
 								<CardActionArea disabled={!img} onClick={() => {}}>
 									{!img && <Skeleton sx={{ height: 200 }} animation="wave" variant="rectangular" />}
-									<CardMedia component="img" height="200" sx={{ display: !img ? "none" : "block" }} image={img}>
-										{/* <img
-				alt={props.videoObject.title.S}
-				src={`${process.env.REACT_APP_CDN_URL}${props.videoObject.thumbnailKey.S}`}
-				onLoad={() => {
-					console.log("loaded");
-					setLoading(false);
-				}}
-			/> */}
-									</CardMedia>
-									{/* <CardActions>
-						<IconButton size="large" color="primary">
-							<AutoAwesome />
-						</IconButton>
-					</CardActions> */}
+									<CardMedia component="img" height="200" sx={{ display: !img ? "none" : "block" }} image={img}></CardMedia>
 								</CardActionArea>
 							</Card>
 						))}
 				</Stack>
-			</Paper>
+			</Paper> */}
 		</Container>
 	);
 };
