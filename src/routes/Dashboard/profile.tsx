@@ -51,14 +51,8 @@
 // export default Watch;
 
 import React from "react";
-import {
-	useTheme,
-	Container,
-	Typography,
-	Stack,
-	Avatar,
-} from "@mui/material";
-import Tooltip from '@mui/material/Tooltip';
+import { useTheme, Container, Typography, Stack, Avatar } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
 import { useAuth } from "../../contexts/auth";
 
 const Profile = () => {
@@ -67,93 +61,127 @@ const Profile = () => {
 
 	return (
 		<Container maxWidth="lg">
-		  <Stack direction="column" spacing={6} sx={{ py: 4 }}>
+			<Stack direction="column" spacing={6} sx={{ py: 4 }}>
+				{/********************************************** Basic Information **********************************************/}
+				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: 5 }}>
+					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+						Basic Information
+					</Typography>
+					<table style={{ borderCollapse: "collapse", border: "none", marginTop: "20px" }}>
+						<tbody style={{ lineHeight: "3em" }}>
+							<tr>
+								<td style={{ paddingRight: "5px", width: "40%" }}>
+									<b>Avatar</b>
+								</td>
+								<td style={{ width: "60%" }}>
+									<Avatar src={auth.user.attributes.picture} sx={{ width: 80, height: 80 }} />
+								</td>
+							</tr>
+							<tr>
+								<td style={{ paddingRight: "5px", width: "40%" }}>
+									<b>Name</b>
+								</td>
+								<td style={{ width: "60%" }}>Golden Bear</td>
+							</tr>
+							<tr>
+								<td style={{ paddingRight: "5px", width: "40%" }}>
+									<b>Gender</b>
+								</td>
+								<td style={{ width: "60%" }}>Rather not say</td>
+							</tr>
+							<tr>
+								<td style={{ paddingRight: "5px", width: "40%" }}>
+									<b>Membership</b>
+								</td>
+								<td style={{ width: "60%" }}>{auth.plan || "Basic"}</td>
+							</tr>
+							<tr>
+								<td style={{ paddingRight: "5px", width: "40%" }}>
+									<b>Achievements</b>
+								</td>
+								<td style={{ width: "60%" }}>
+									<Tooltip title="Active Player" arrow>
+										<span> 🏅 </span>
+									</Tooltip>
+									&nbsp;
+									<Tooltip title="Active Vlogger" arrow>
+										<span> 🥇 </span>
+									</Tooltip>
+									&nbsp;
+									<Tooltip title="Active Commentor" arrow>
+										<span> 🏆 </span>
+									</Tooltip>
+									&nbsp;
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</Stack>
 
-			{/********************************************** Basic Information **********************************************/}
-			<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: 5 }}>
-				<Typography variant="h4" sx={{ fontWeight: "bold" }}>
-					Basic Information
-				</Typography>
-				<table style={{ borderCollapse: "collapse", border: "none", marginTop: "20px" }}>
-					<tbody style={{ lineHeight: "3em" }}>
-					<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}><b>Avatar</b></td>
-							<td style={{ width: "60%" }}><Avatar src={auth.user.attributes.picture} sx={{ width: 80, height: 80 }}/></td>
-						</tr>
-						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}><b>Name</b></td>
-							<td style={{ width: "60%" }}>Golden Bear</td>
-						</tr>
-						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}><b>Gender</b></td>
-							<td style={{ width: "60%" }}>Rather not say</td>
-						</tr>
-						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}><b>Membership</b></td>
-							<td style={{ width: "60%" }}>Free</td>
-						</tr>
-						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}><b>Achievements</b></td>
-							<td style={{ width: "60%" }}>
-							    <Tooltip title="Active Player" arrow><span> 🏅 </span></Tooltip>&nbsp;
-								<Tooltip title="Active Vlogger" arrow><span> 🥇 </span></Tooltip>&nbsp;
-								<Tooltip title="Active Commentor" arrow><span> 🏆 </span></Tooltip>&nbsp;
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</Stack>
+				{/********************************************** Contact Information **********************************************/}
+				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: 5 }}>
+					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+						Contact Information
+					</Typography>
+					<table style={{ borderCollapse: "collapse", border: "none", marginTop: "20px" }}>
+						<tbody style={{ lineHeight: "3em" }}>
+							<tr>
+								<td style={{ paddingRight: "5px", width: "40%" }}>
+									<b>Email</b>
+								</td>
+								<td style={{ width: "60%" }}>golden_bear@berkeley.edu</td>
+							</tr>
+							<tr>
+								<td style={{ paddingRight: "5px", width: "40%" }}>
+									<b>Phone Number</b>
+								</td>
+								<td style={{ width: "60%" }}>510-666-6666</td>
+							</tr>
+						</tbody>
+					</table>
+				</Stack>
 
-			{/********************************************** Contact Information **********************************************/}
-			<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: 5 }}>
-				<Typography variant="h4" sx={{ fontWeight: "bold" }}>
-					Contact Information
-				</Typography>
-				<table style={{ borderCollapse: "collapse", border: "none", marginTop: "20px" }}>
-					<tbody style={{ lineHeight: "3em" }}>
-						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}><b>Email</b></td>
-							<td style={{ width: "60%" }}>golden_bear@berkeley.edu</td>
-						</tr>
-						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}><b>Phone Number</b></td>
-							<td style={{ width: "60%" }}>510-666-6666</td>
-						</tr>
-					</tbody>
-				</table>
+				{/********************************************** Addresses **********************************************/}
+				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: 5 }}>
+					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+						Address
+					</Typography>
+					<table style={{ borderCollapse: "collapse", border: "none", marginTop: "20px" }}>
+						<tbody style={{ lineHeight: "3em" }}>
+							<tr>
+								<td style={{ paddingRight: "5px", width: "40%" }}>
+									<b>Street Address</b>
+								</td>
+								<td style={{ width: "60%" }}>123 Main Street</td>
+							</tr>
+							<tr>
+								<td style={{ paddingRight: "5px", width: "40%" }}>
+									<b>City</b>
+								</td>
+								<td style={{ width: "60%" }}>Berkeley</td>
+							</tr>
+							<tr>
+								<td style={{ paddingRight: "5px", width: "40%" }}>
+									<b>State/Province</b>
+								</td>
+								<td style={{ width: "60%" }}>California</td>
+							</tr>
+							<tr>
+								<td style={{ paddingRight: "5px", width: "40%" }}>
+									<b>Postal Code</b>
+								</td>
+								<td style={{ width: "60%" }}>94709</td>
+							</tr>
+							<tr>
+								<td style={{ paddingRight: "5px", width: "40%" }}>
+									<b>Country</b>
+								</td>
+								<td style={{ width: "60%" }}>U.S.A</td>
+							</tr>
+						</tbody>
+					</table>
+				</Stack>
 			</Stack>
-
-			{/********************************************** Addresses **********************************************/}
-			<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: 5 }}>
-				<Typography variant="h4" sx={{ fontWeight: "bold" }}>
-					Address
-				</Typography>
-				<table style={{ borderCollapse: "collapse", border: "none", marginTop: "20px" }}>
-					<tbody style={{ lineHeight: "3em" }}>
-						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}><b>Street Address</b></td>
-							<td style={{ width: "60%" }}>123 Main Street</td>
-						</tr>
-						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}><b>City</b></td>
-							<td style={{ width: "60%" }}>Berkeley</td>
-						</tr>
-						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}><b>State/Province</b></td>
-							<td style={{ width: "60%" }}>California</td>
-						</tr>
-						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}><b>Postal Code</b></td>
-							<td style={{ width: "60%" }}>94709</td>
-						</tr>
-						<tr>
-							<td style={{ paddingRight: "5px", width: "40%" }}><b>Country</b></td>
-							<td style={{ width: "60%" }}>U.S.A</td>
-						</tr>
-					</tbody>
-				</table>
-			</Stack>
-		  </Stack>
 		</Container>
 	);
 };

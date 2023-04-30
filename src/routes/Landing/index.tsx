@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
 import { useTheme, Container, Button } from "@mui/material";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import Spline from "@splinetool/react-spline";
+import Lottie from "lottie-react";
+import animationData from "../../assets/98288-loading.json";
 
 import { Header, Footer } from "../../components";
 import Court3D from "./court";
@@ -17,6 +18,7 @@ const LandingContent = () => {
 	const theme = useTheme();
 	const navigate = useNavigate();
 	const ref = useRef() as any;
+	const [loading, setLoading] = React.useState(true);
 	return (
 		<div>
 			<Container maxWidth="lg">
@@ -24,7 +26,21 @@ const LandingContent = () => {
 					<p style={{ textAlign: "center", fontSize: 70, fontWeight: "600", backgroundColor: "transparent", marginTop: 50 }}>
 						Smash the badminton with AI-powered tool.
 					</p>
-					<img alt="court" src={require("../../assets/spline-court.png")} style={{ width: "100%", marginTop: -200, marginBottom: -100 }} />
+					{loading && (
+						<div style={{ height: 300 }}>
+							<Lottie animationData={animationData} autoplay loop size={300} style={{ margin: "0 auto" }} />
+						</div>
+					)}
+					<img
+						alt="court"
+						onLoad={() => {
+							setLoading(false);
+						}}
+						className={`image-container${!loading ? " loaded" : ""}`}
+						src={require("../../assets/spline-court.png")}
+						style={{ width: "100%", marginTop: -200, marginBottom: -100, display: loading ? "none" : "block" }}
+					/>
+
 					{/* <div style={{ width: "100%", background: "grey", height: 500 }}> */}
 					{/* <Spline
 						ref={ref}
@@ -57,14 +73,14 @@ const LandingContent = () => {
 				</Stack>
 
 				<center style={{ marginTop: "100px", opacity: 0.5 }}>
-					<p style={{ fontSize: "20px", color: theme.palette.text.secondary, fontWeight: "700" }}>TRUSTED BY</p>
-					<center style={{ gap: "10px" }}>
+					<p style={{ fontSize: "20px", color: theme.palette.text.secondary, fontWeight: "700", marginBottom: 20 }}>TRUSTED BY</p>
+					<div style={{ gap: "10px", display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "center" }}>
 						{[...Array(5)].map((item, index) => (
 							<span key={index} style={{ backgroundColor: theme.palette.action.selected, padding: "10px", margin: theme.spacing(2) }}>
 								Partner {index + 1}
 							</span>
 						))}
-					</center>
+					</div>
 				</center>
 			</Container>
 			<div
