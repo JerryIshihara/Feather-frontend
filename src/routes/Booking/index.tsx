@@ -4,7 +4,6 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
-import SearchIcon from '@mui/icons-material/Search';
 import Typography from "@mui/material/Typography";
 import { Box, Container, useTheme, Stack, MenuItem, TextField} from "@mui/material";
 
@@ -28,18 +27,18 @@ type CardData = {
 	image?: string;
 };
 
-const loadCourtInfo = () =>{
-	
-}
-
 const Booking = () => {
 	const [courts, setCourts] = useState<CardData[]>([]);
-	const [selectedCourt, setSelectedCourt] = useState<string>("");
+	const [selectedCourt, setSelectedCourt] = useState<string>("all");
+
+	const handleCourtChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+		setSelectedCourt(event.target.value as string);
+	};
   
 	useEffect(() => {
 		const fetchCourts = async () => {
 		  try {
-			// http://localhost:8000/api/booking/search?name=${selectedCourt}
+			// const response = await fetch(`/api/booking/search?name=${selectedCourt}`);
 			const response = await fetch(`http://localhost:8000/api/booking/search?name=${selectedCourt}`);
 			const data = await response.json();
 
@@ -75,8 +74,8 @@ const Booking = () => {
 	const handleSearchClick = () => {
 		const fetchCourts = async () => {
 		  try {
-			// http://localhost:8000/api/booking/search?name=${selectedCourt}
-			const response = await fetch(`/api/booking/search?name=${selectedCourt}`);
+			// const response = await fetch(`/api/booking/search?name=${selectedCourt}`);
+			const response = await fetch(`http://localhost:8000/api/booking/search?name=${selectedCourt}`);
 			const data = await response.json();
 
 			const courtsWithImages = data.courts.map((court: CardData) => {
@@ -118,18 +117,16 @@ const Booking = () => {
 						select
 						label="Select a court"
 						variant="outlined"
+						value={selectedCourt}
+						onChange={handleCourtChange}
 						fullWidth
 					>
-						{['Eastbay Badminton', 'Elite Badminton', 'Bintang Badminton', 'Synergy Badminton', 'Bay Badminton'].map((court) => (
+						{['All', 'Eastbay Badminton', 'Elite Badminton', 'Bintang Badminton', 'Synergy Badminton', 'Bay Badminton'].map((court) => (
 						<MenuItem key={court} value={court}>
 							{court}
 						</MenuItem>
 						))}
 					</TextField>
-
-					<Button variant="contained" startIcon={<SearchIcon />} component="span" onClick={handleSearchClick}>
-						Search
-					</Button>
 				</div>
 			</Stack>
 			<Stack direction="column" spacing={6} sx={{ py: 0 }}>
