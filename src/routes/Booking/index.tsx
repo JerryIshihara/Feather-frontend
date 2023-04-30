@@ -5,6 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { useAuth } from "../../contexts/auth";
 import {DialogContentText, DialogTitle, Box, Container, Dialog, Stack, MenuItem, TextField, DialogContent, DialogActions} from "@mui/material";
 
 // Remove in the future
@@ -28,15 +29,47 @@ type CardData = {
 };
 
 const Booking = () => {
+	const auth = useAuth() as any;
 	const [courts, setCourts] = useState<CardData[]>([]);
 	const [selectedCourt, setSelectedCourt] = useState<string>("all");
 	const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
 	const [open, setOpen] = useState(false);
+	const [bookingStatus, setBookingStatus] = useState<'success' | 'error' | 'pending'>('pending');
   
 	const handleDetailsClick = (card: CardData) => {
 	  setSelectedCard(card);
 	  setOpen(true);
 	};
+
+	const handleReserve = (card: CardData) => {
+		const user_id = auth.user.attributes.sub;
+		const { id } = card;
+	  
+		setBookingStatus('pending');
+
+		fetch('/api/booking/reserve', {
+		// fetch('http://localhost:8000/api/booking/reserve', {
+		  method: 'POST',
+		  body: JSON.stringify({
+			id: id,
+			user_id: user_id
+		  }),
+		  headers: {
+			'Content-Type': 'application/json'
+		  }
+		})
+		  .then(response => response.json())
+		  .then(data => {
+			console.log(data);
+			setBookingStatus('success');
+			alert('You have successfully booked a court!');
+		  })
+		  .catch(error => {
+			console.error(error);
+			setBookingStatus('error');
+			alert('You have failed to book a court!');
+		  });
+	  };
   
 	const handleClose = () => {
 	  setOpen(false);
@@ -80,7 +113,7 @@ const Booking = () => {
 		};
 	
 		fetchCourts();
-	  }, [selectedCourt]);
+	  }, [selectedCourt, bookingStatus]);
 
 	return (
 		<Container maxWidth="lg">
@@ -122,7 +155,7 @@ const Booking = () => {
 							</CardContent>
 							<CardActions sx={{ position: "relative", bottom: 0 }}>
 								<Button size="small" onClick={() => handleDetailsClick(card)}>Details</Button>
-								<Button size="small">Reserve</Button>
+								<Button size="small" onClick={() => handleReserve(card)}>Reserve</Button>
 							</CardActions>
 						</Card>
 					))}
