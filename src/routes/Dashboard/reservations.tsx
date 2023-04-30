@@ -1,9 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
-  CardActions,
-  Card,
-  CardContent,
-  CardMedia,
   useTheme,
   Button,
   Table,
@@ -55,11 +51,40 @@ const Reservations = () => {
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [selectedReservation, setSelectedReservation] = useState<Reservation>();
   const [open, setOpen] = useState(false);
+  const [confirmCancel, setConfirmCancel] = useState(false);
+  const [cancelStatus, setCancelStatus] = useState('');
 
   const handleDetailsClick = (reservation: Reservation) => {
 	setSelectedReservation(reservation);
 	setOpen(true);
   };
+
+  const handleCancel = (reservation: Reservation) => {
+	const { id } = reservation;
+  
+	setCancelStatus('pending');
+
+	fetch('/api/booking/cancel_reserve', {
+	// fetch('http://localhost:8000/api/booking/cancel_reserve', {
+	  method: 'POST',
+	  body: JSON.stringify({
+		id: id
+	  }),
+	  headers: {
+		'Content-Type': 'application/json'
+	  }
+	})
+	  .then(response => response.json())
+	  .then(data => {
+		console.log(data);
+		setCancelStatus('success');
+		alert('You have successfully cancelled your reservation!');
+	  })
+	  .catch(error => {
+		console.error(error);
+		setCancelStatus('You have failed to cancelled your reservation!');
+	  });
+	};
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -89,7 +114,7 @@ const Reservations = () => {
       setReservations(reservationWithImages);
     };
     fetchReservations();
-  }, []);
+  }, [cancelStatus]);
 
   const handleClose = () => {
     setOpen(false);
@@ -114,7 +139,7 @@ const Reservations = () => {
 								<Button variant="contained" sx={{ mr: 2 }} startIcon={<InfoIcon />} onClick={() => handleDetailsClick(reservation)}>
 									Details
 								</Button>
-								<Button variant="contained" color="error" startIcon={<WarningAmberIcon />}>
+								<Button variant="contained" color="error" startIcon={<WarningAmberIcon />} onClick={() => handleCancel(reservation)}>
 									Cancel
 								</Button>
 							</TableCell>
