@@ -3,6 +3,7 @@ import { useTheme, Container, Button } from "@mui/material";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import animationData from "../../assets/98288-loading.json";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { Header, Footer } from "../../components";
 import Court3D from "./court";
@@ -19,11 +20,20 @@ const LandingContent = () => {
 	const navigate = useNavigate();
 	const ref = useRef() as any;
 	const [loading, setLoading] = React.useState(true);
+	const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 	return (
 		<div>
 			<Container maxWidth="lg">
 				<Stack direction="column" alignItems="center" spacing={0} style={{ marginTop: -50 }}>
-					<p style={{ textAlign: "center", fontSize: 70, fontWeight: "600", backgroundColor: "transparent", marginTop: 50 }}>
+					<p
+						style={{
+							textAlign: "center",
+							fontSize: isMobile ? 50 : 70,
+							fontWeight: "600",
+							backgroundColor: "transparent",
+							marginTop: 50,
+						}}
+					>
 						Smash the badminton with AI-powered tool.
 					</p>
 					{loading && (
@@ -38,7 +48,12 @@ const LandingContent = () => {
 						}}
 						className={`image-container${!loading ? " loaded" : ""}`}
 						src={require("../../assets/spline-court.png")}
-						style={{ width: "100%", marginTop: -200, marginBottom: -100, display: loading ? "none" : "block" }}
+						style={{
+							width: "100%",
+							marginTop: isMobile ? -50 : -200,
+							marginBottom: isMobile ? -50 : -100,
+							display: loading ? "none" : "block",
+						}}
 					/>
 
 					{/* <div style={{ width: "100%", background: "grey", height: 500 }}> */}

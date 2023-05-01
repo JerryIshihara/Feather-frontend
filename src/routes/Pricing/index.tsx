@@ -5,6 +5,7 @@ import { useTheme, Container, Grid, Typography, Button, Stack, Divider, Box, Pap
 import { styled } from "@mui/system";
 import { pink } from "@mui/material/colors";
 import { CheckCircleOutline } from "@mui/icons-material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { plans } from "../Payment";
 
 const PricingContainer = styled(Container)(({ theme }) => ({
@@ -15,13 +16,14 @@ const PricingContainer = styled(Container)(({ theme }) => ({
 const Pricing = () => {
 	const theme = useTheme();
 	const navigate = useNavigate();
+	const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 	const navigateTo = (plan: string) => {
 		navigate("/payment?plan=" + plan);
 	};
 	return (
-		<PricingContainer maxWidth="lg">
+		<PricingContainer maxWidth="lg" sx={{ p: 4 }}>
 			<Stack direction="column" alignItems="center" spacing={2} sx={{ mb: 10 }}>
-				<Typography variant="h1" align="center" sx={{ fontWeight: "bold" }}>
+				<Typography variant={isMobile ? "h3" : "body2"} align="center" sx={{ fontWeight: "bold" }}>
 					Pricing Plans
 				</Typography>
 				<Typography variant="subtitle1" align="center" sx={{ color: theme.palette.text.secondary, maxWidth: "700px" }}>

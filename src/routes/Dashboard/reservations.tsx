@@ -11,6 +11,7 @@ import {
 	Typography,
 	Divider,
 	Container,
+	Stack,
 } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
@@ -57,12 +58,14 @@ const Reservations = () => {
 								<TableCell>{reservation.timePeriod}</TableCell>
 								<TableCell>{reservation.address}</TableCell>
 								<TableCell align="right">
-									<Button variant="contained" sx={{ mr: 2 }} startIcon={<InfoIcon />}>
-										Details
-									</Button>
-									<Button variant="contained" color="error" startIcon={<WarningAmberIcon />}>
-										Cancel
-									</Button>
+									<Stack direction={{ md: "row", sm: "column" }} justifyContent="flex-end" spacing={2}>
+										<Button variant="contained" sx={{ mr: 2 }} startIcon={<InfoIcon />}>
+											Details
+										</Button>
+										<Button variant="contained" color="error" startIcon={<WarningAmberIcon />}>
+											Cancel
+										</Button>
+									</Stack>
 								</TableCell>
 							</TableRow>
 						))}
