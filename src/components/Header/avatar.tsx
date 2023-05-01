@@ -20,7 +20,7 @@ const HeaderAvatar: React.FC<Props> = props => {
 		<div style={{ flex: 1 }}>
 			<div className="login-tabs">
 				{show ? (
-					<div style={{ height: 60, width: 60 }} onClick={() => navigate("/dashboard")}>
+					<div onClick={() => navigate("/dashboard")}>
 						<Avatar src={auth.user.attributes.picture} />
 					</div>
 				) : (
