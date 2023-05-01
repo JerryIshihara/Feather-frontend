@@ -1,9 +1,11 @@
 // export default Pricing;
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useTheme, Container, Grid, Typography, Button, Stack, Divider, Box, Paper } from "@mui/material";
 import { styled } from "@mui/system";
 import { pink } from "@mui/material/colors";
 import { CheckCircleOutline } from "@mui/icons-material";
+import { plans } from "../Payment";
 
 const PricingContainer = styled(Container)(({ theme }) => ({
 	padding: theme.spacing(8, 0),
@@ -12,6 +14,10 @@ const PricingContainer = styled(Container)(({ theme }) => ({
 
 const Pricing = () => {
 	const theme = useTheme();
+	const navigate = useNavigate();
+	const navigateTo = (plan: string) => {
+		navigate("/payment?plan=" + plan);
+	};
 	return (
 		<PricingContainer maxWidth="lg">
 			<Stack direction="column" alignItems="center" spacing={2} sx={{ mb: 10 }}>
@@ -24,19 +30,25 @@ const Pricing = () => {
 				</Typography>
 			</Stack>
 			<Grid container spacing={4}>
-				<Grid item xs={12} md={4}>
-					<PricingCard
-						title="Basic"
-						price="Free"
-						features={["Video upload for replay", "Limited sports performance analysis", "Limited AI editing usage"]}
-					/>
-				</Grid>
-				<Grid item xs={12} md={4}>
+				{plans.map((plan: any) => (
+					<Grid item xs={12} md={4}>
+						<PricingCard
+							title={plan.title}
+							price={plan.price ? `$${plan.price}` : "Free"}
+							features={plan.features}
+							popular={plan.popular}
+							onUpgrade={navigateTo}
+						/>
+					</Grid>
+				))}
+
+				{/* <Grid item xs={12} md={4}>
 					<PricingCard
 						title="Pro"
 						price="$19.99"
 						features={["Video upload for replay", "Sports performance analysis", "Unlimited AI editing usage"]}
 						popular
+						onUpgrade={navigateTo}
 					/>
 				</Grid>
 				<Grid item xs={12} md={4}>
@@ -44,8 +56,9 @@ const Pricing = () => {
 						title="Premium"
 						price="$29.99"
 						features={["Video upload for replay", "Sports advanced analysis", "Unlimited AI editing usage", "Team colloration"]}
+						onUpgrade={navigateTo}
 					/>
-				</Grid>
+				</Grid> */}
 			</Grid>
 		</PricingContainer>
 	);
@@ -56,9 +69,10 @@ interface PricingCardProps {
 	price: string;
 	features: string[];
 	popular?: boolean;
+	onUpgrade: (plan: string) => void;
 }
 
-const PricingCard = ({ title, price, features, popular }: PricingCardProps) => {
+const PricingCard = ({ title, price, features, popular, onUpgrade }: PricingCardProps) => {
 	const theme = useTheme();
 	const [elevation, setElevation] = React.useState(4);
 	return (
@@ -113,9 +127,20 @@ const PricingCard = ({ title, price, features, popular }: PricingCardProps) => {
 						))}
 					</Stack>
 				</Stack>
-				<Button variant="contained" size="large" color="primary" fullWidth sx={{ mt: 5, borderRadius: 0 }}>
-					Upgrade
-				</Button>
+				{title.toLowerCase() !== "basic" && (
+					<Button
+						variant="contained"
+						size="large"
+						color="primary"
+						fullWidth
+						sx={{ mt: 5, borderRadius: 0 }}
+						onClick={() => {
+							onUpgrade(title.toLowerCase());
+						}}
+					>
+						Upgrade
+					</Button>
+				)}
 			</Paper>
 		</Box>
 	);
