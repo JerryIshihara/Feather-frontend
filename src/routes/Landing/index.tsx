@@ -103,12 +103,13 @@ const LandingContent = () => {
 				style={{
 					backgroundColor: "black",
 					marginTop: theme.spacing(16),
+					width: "100%",
 				}}
 			>
 				<Container maxWidth="lg" style={{ padding: theme.spacing(4) }}>
 					<Stack direction={{ md: "row", sm: "column" }} alignItems="center" spacing={5}>
 						<div style={{ textAlign: "center" }}>
-							<p style={{ fontSize: "50px", fontWeight: "700" }}>🎥 One-Click Highlight Reel</p>
+							<p style={{ fontSize: isMobile ? "40px" : "50px", fontWeight: "700" }}>🎥 One-Click Highlight Reel</p>
 							<p style={{ fontSize: "20px", fontWeight: "400" }}>
 								🚀 Save time and showcase your skills with our one-click highlight feature! ⏰
 							</p>
@@ -116,7 +117,7 @@ const LandingContent = () => {
 								🙌 Never struggle with complex video editing tools again - create high-quality highlights with ease! 💪
 							</p>
 						</div>
-						<img src={VIDEO_PNG} alt="video" />
+						<img style={{ width: "50%" }} src={VIDEO_PNG} alt="video" />
 					</Stack>
 				</Container>
 			</div>
@@ -124,7 +125,7 @@ const LandingContent = () => {
 				<Container maxWidth="lg" style={{ padding: theme.spacing(4) }}>
 					<Stack direction={{ md: "row", sm: "column" }} alignItems="center" spacing={5}>
 						<div style={{ textAlign: "center" }}>
-							<p style={{ fontSize: "50px", fontWeight: "700" }}>
+							<p style={{ fontSize: isMobile ? "40px" : "50px", fontWeight: "700" }}>
 								🏸️ Smash Your Way to Success: AI-powered Badminton Skill Assessment
 							</p>
 							<p style={{ fontSize: "20px", fontWeight: "400" }}>🎮 Serve up your game with AI-assisted skill analysis ⏰</p>
@@ -132,23 +133,24 @@ const LandingContent = () => {
 								🤖️ Let AI be your coach: Assess and improve your badminton skills 💪
 							</p>
 						</div>
-						<img src={AI_PNG} alt="AI" />
+						<img style={{ width: "50%" }} src={AI_PNG} alt="AI" />
 					</Stack>
 				</Container>
 			</div>
 			<div
 				style={{
 					backgroundColor: "black",
+					width: "100%",
 				}}
 			>
 				<Container maxWidth="lg" style={{ padding: theme.spacing(4) }}>
 					<Stack direction={{ md: "row", sm: "column" }} alignItems="center" spacing={5}>
 						<div style={{ textAlign: "center" }}>
-							<p style={{ fontSize: "50px", fontWeight: "700" }}>🗓️ Ace your Game with Easy Court Booking</p>
+							<p style={{ fontSize: isMobile ? "40px" : "50px", fontWeight: "700" }}>🗓️ Ace your Game with Easy Court Booking</p>
 							<p style={{ fontSize: "20px", fontWeight: "400" }}>🏸 Book your court and let the games begin 🎮</p>
 							<p style={{ fontSize: "20px", fontWeight: "400" }}>👟 Get ready to play! Reserve your badminton court now 💪</p>
 						</div>
-						<img src={COURT_PNG} alt="badminton" />
+						<img style={{ width: "50%" }} src={COURT_PNG} alt="badminton" />
 					</Stack>
 				</Container>
 			</div>
