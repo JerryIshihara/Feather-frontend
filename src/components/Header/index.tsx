@@ -93,7 +93,7 @@ const Header: React.FC<Props> = props => {
 				</Stack>
 
 				{!isMobile && (
-					<Stack direction="row" spacing={3}>
+					<Stack direction="row" spacing={2}>
 						{Object.keys(HeaderRoutes).map(title => (
 							<Tab key={title} title={title} />
 						))}

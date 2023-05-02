@@ -6,12 +6,13 @@ import animationData from "../../assets/98288-loading.json";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { Header, Footer } from "../../components";
-import Court3D from "./court";
 import Booking from "../Booking";
 import Feed from "../Feed";
 import Pricing from "../Pricing";
 import { Stack } from "@mui/system";
-import SplineCourt from "./spline-court";
+import AI_PNG from "../../assets/ai.png";
+import VIDEO_PNG from "../../assets/video.png";
+import COURT_PNG from "../../assets/badminton.webp";
 
 const SCENE = "https://prod.spline.design/U2fplQkZQPZ02Xkn/scene.splinecode";
 
@@ -72,7 +73,7 @@ const LandingContent = () => {
 					/> */}
 
 					<center>
-						<p style={{ fontSize: "25px", padding: "0 30px" }}>
+						<p style={{ fontSize: "25px", padding: "0 30px", lineHeight: "40px" }}>
 							Get your game highlight clips with just one-click. Analyze your motion data and skills with our advanced AI tools.
 						</p>
 						<Button
@@ -105,24 +106,34 @@ const LandingContent = () => {
 				}}
 			>
 				<Container maxWidth="lg" style={{ padding: theme.spacing(4) }}>
-					<div style={{ textAlign: "center" }}>
-						<p style={{ fontSize: "50px", fontWeight: "700" }}>🎥 One-Click Highlight Reel</p>
-						<p style={{ fontSize: "20px", fontWeight: "400" }}>
-							🚀 Save time and showcase your skills with our one-click highlight feature! ⏰
-						</p>
-						<p style={{ fontSize: "20px", fontWeight: "400" }}>
-							🙌 Never struggle with complex video editing tools again - create high-quality highlights with ease! 💪
-						</p>
-					</div>
+					<Stack direction={{ md: "row", sm: "column" }} alignItems="center" spacing={5}>
+						<div style={{ textAlign: "center" }}>
+							<p style={{ fontSize: "50px", fontWeight: "700" }}>🎥 One-Click Highlight Reel</p>
+							<p style={{ fontSize: "20px", fontWeight: "400" }}>
+								🚀 Save time and showcase your skills with our one-click highlight feature! ⏰
+							</p>
+							<p style={{ fontSize: "20px", fontWeight: "400" }}>
+								🙌 Never struggle with complex video editing tools again - create high-quality highlights with ease! 💪
+							</p>
+						</div>
+						<img src={VIDEO_PNG} alt="video" />
+					</Stack>
 				</Container>
 			</div>
 			<div>
 				<Container maxWidth="lg" style={{ padding: theme.spacing(4) }}>
-					<div style={{ textAlign: "center" }}>
-						<p style={{ fontSize: "50px", fontWeight: "700" }}>🏸️ Smash Your Way to Success: AI-powered Badminton Skill Assessment</p>
-						<p style={{ fontSize: "20px", fontWeight: "400" }}>🎮 Serve up your game with AI-assisted skill analysis ⏰</p>
-						<p style={{ fontSize: "20px", fontWeight: "400" }}>🤖️ Let AI be your coach: Assess and improve your badminton skills 💪</p>
-					</div>
+					<Stack direction={{ md: "row", sm: "column" }} alignItems="center" spacing={5}>
+						<div style={{ textAlign: "center" }}>
+							<p style={{ fontSize: "50px", fontWeight: "700" }}>
+								🏸️ Smash Your Way to Success: AI-powered Badminton Skill Assessment
+							</p>
+							<p style={{ fontSize: "20px", fontWeight: "400" }}>🎮 Serve up your game with AI-assisted skill analysis ⏰</p>
+							<p style={{ fontSize: "20px", fontWeight: "400" }}>
+								🤖️ Let AI be your coach: Assess and improve your badminton skills 💪
+							</p>
+						</div>
+						<img src={AI_PNG} alt="AI" />
+					</Stack>
 				</Container>
 			</div>
 			<div
@@ -131,11 +142,14 @@ const LandingContent = () => {
 				}}
 			>
 				<Container maxWidth="lg" style={{ padding: theme.spacing(4) }}>
-					<div style={{ textAlign: "center" }}>
-						<p style={{ fontSize: "50px", fontWeight: "700" }}>🗓️ Ace your Game with Easy Court Booking</p>
-						<p style={{ fontSize: "20px", fontWeight: "400" }}>🏸 Book your court and let the games begin 🎮</p>
-						<p style={{ fontSize: "20px", fontWeight: "400" }}>👟 Get ready to play! Reserve your badminton court now 💪</p>
-					</div>
+					<Stack direction={{ md: "row", sm: "column" }} alignItems="center" spacing={5}>
+						<div style={{ textAlign: "center" }}>
+							<p style={{ fontSize: "50px", fontWeight: "700" }}>🗓️ Ace your Game with Easy Court Booking</p>
+							<p style={{ fontSize: "20px", fontWeight: "400" }}>🏸 Book your court and let the games begin 🎮</p>
+							<p style={{ fontSize: "20px", fontWeight: "400" }}>👟 Get ready to play! Reserve your badminton court now 💪</p>
+						</div>
+						<img src={COURT_PNG} alt="badminton" />
+					</Stack>
 				</Container>
 			</div>
 		</div>
