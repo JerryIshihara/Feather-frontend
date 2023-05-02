@@ -7,6 +7,14 @@ export type CommentObject = {
 	createdAt: string;
 };
 
+type CommentData = {
+	comment_key: number;
+	aws_key: number;
+	user_id: string;
+	comment: string;
+	created_at: string;
+};
+
 
 const testComments : CommentObject[] = [
     {
@@ -30,14 +38,46 @@ const testComments : CommentObject[] = [
   ];
   
 
-export const getVideoComments = (videoId: string | null) => {
+export const getVideoComments = async (videoId: string | null) => {
     //TODO: get all comments for a video
-    return testComments;
+    // return testComments;
+    let videoComments:CommentObject[] = [];
+    return await fetch("http://localhost:8000/api/videoComments?aws_key=" + videoId)
+    .then(response => response.json())
+    .then(data => {
+        videoComments = data.comments.map((commentData:CommentData) => 
+            ({
+                commentId: '' + commentData.comment_key,
+                userId: '' + commentData.user_id,
+                comment: commentData.comment,
+                createdAt: commentData.created_at,
+            })
+        );
+        return videoComments;
+    })
+    .catch(error => {
+        console.error(error);
+        return videoComments;
+    });
 };
 
 
-export const addVideoComment = (videoId: string | undefined, comment: string) => {
-   //TODO: add specific comment to a video
+export const addVideoComment = async (videoId: string | undefined, comment: string) => {
+    // await fetch('/api/videoComments/', {
+    await fetch('http://localhost:8000/api/videoComments/', {
+        method: "POST",
+        body: JSON.stringify({
+            aws_key: videoId,
+            user_id: "michael_wang_1",
+            comment: comment,
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    .catch(error => {
+        console.error(error);
+    });
 };
 
 

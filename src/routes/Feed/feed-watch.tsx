@@ -21,22 +21,31 @@ const FeedWatch = () => {
 	const [params, setParams] = useSearchParams();
 	const auth = useAuth() as any;
 	const [videoObject, setVideoObject] = useState<VideoObject>();
-    const [comments, setComments] = useState<CommentObject[]>();
+    const [comments, setComments] = useState<CommentObject[]>([]);
     const [addingComment, setAddingComment] = useState<boolean>();
     const [newComment, setNewComment] = useState<string>("");
 
+
+    const fetchComments = () => {
+        getVideoComments(params.get("v")).then((currentComments: any) => {
+            if (currentComments) {
+                setComments(() => [...currentComments]);
+            }
+        });
+    }
+
 	useEffect(() => {
-		getVideo(params.get("v")).then((res: any) => {
-			if (res.data.Item) {
-				const v = res.data.Item;
-				setVideoObject(v);
-			}
-		});
-        setComments(getVideoComments(params.get("v")));
+        getVideo(params.get("v")).then((res: any) => {
+            if (res.data.Item) {
+                const v = res.data.Item;
+                setVideoObject(v);
+            }
+        });
+        fetchComments();
 	}, [params]);
 
     const addComment = (comment: string) => {
-        addVideoComment(videoObject?.["video-id"].S, comment);
+        addVideoComment(videoObject?.["video-id"].S, comment).then(() => fetchComments());
         setNewComment("");
         setAddingComment(false); 
     };
@@ -73,11 +82,11 @@ const FeedWatch = () => {
                             {auth.user && auth.user.attributes && <Avatar src={auth.user.attributes.picture} />}
                         </Stack>
                     </Grid>
-                        <Grid item xs onClick={()=>setAddingComment(true)}>
-                            <ClickAwayListener onClickAway={()=>setAddingComment(false)}>
-                                <TextField id="standard-basic" label="Add a comment" placeholder="Add a comment..." variant="standard"  fullWidth value = {newComment} onChange={e => {setNewComment(e.target.value);}}/>
-                            </ClickAwayListener>
-                        </Grid>
+                    <Grid item xs onClick={()=>setAddingComment(true)}>
+                        <ClickAwayListener onClickAway={()=>setAddingComment(false)}>
+                            <TextField id="standard-basic" label="Add a comment" placeholder="Add a comment..." variant="standard"  fullWidth value = {newComment} onChange={e => {setNewComment(e.target.value);}}/>
+                        </ClickAwayListener>
+                    </Grid>
                     {addingComment &&
                         <Grid item xs={1}>
                             <Stack direction="row" justifyContent="flex-end" sx={{ pt:1 }}>
