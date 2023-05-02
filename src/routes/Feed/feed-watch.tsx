@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { Avatar, IconButton, TextField} from "@mui/material";
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 import { Container, Stack, Grid, Typography, Button, Paper, Divider, LinearProgress, Card, CardActionArea, CardMedia, Skeleton } from "@mui/material";
-import { Send } from "@mui/icons-material";
+import { Send, Delete} from "@mui/icons-material";
 
 import {getVideo } from "../../api/video";
 import {type CommentObject, getVideoComments, addVideoComment, deleteVideoComment} from "../../api/comment";
@@ -51,8 +51,7 @@ const FeedWatch = () => {
     };
 
     const deleteComment = (commentId: string) => {
-        //TODO: add logic to delete comment
-        deleteVideoComment(videoObject?.["video-id"].S, commentId);
+        deleteVideoComment(videoObject?.["video-id"].S, commentId).then(() => fetchComments());
     };
 
 	return (
@@ -111,6 +110,11 @@ const FeedWatch = () => {
                             {comment.createdAt}
                           </p>
                         </Grid>
+                        <Grid item xs={1} justifyContent="right">
+                                <IconButton onClick={()=>{deleteComment(comment.commentId)}}>
+                                    <Delete />
+                                </IconButton>
+                    </Grid>
                       </Grid>
                       {idx < comments.length - 1 && <Divider variant="fullWidth"/>}
                     </Paper>

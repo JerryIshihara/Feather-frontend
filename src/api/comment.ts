@@ -42,7 +42,8 @@ export const getVideoComments = async (videoId: string | null) => {
     //TODO: get all comments for a video
     // return testComments;
     let videoComments:CommentObject[] = [];
-    return await fetch("http://localhost:8000/api/videoComments?aws_key=" + videoId)
+    return await fetch("/api/videoComments?aws_key=" + videoId)
+    // return await fetch("http://localhost:8000/api/videoComments?aws_key=" + videoId)
     .then(response => response.json())
     .then(data => {
         videoComments = data.comments.map((commentData:CommentData) => 
@@ -63,8 +64,8 @@ export const getVideoComments = async (videoId: string | null) => {
 
 
 export const addVideoComment = async (videoId: string | undefined, comment: string) => {
-    // await fetch('/api/videoComments/', {
-    await fetch('http://localhost:8000/api/videoComments/', {
+    await fetch('/api/videoComments/', {
+    // await fetch('http://localhost:8000/api/videoComments/', {
         method: "POST",
         body: JSON.stringify({
             aws_key: videoId,
@@ -81,6 +82,18 @@ export const addVideoComment = async (videoId: string | undefined, comment: stri
 };
 
 
-export const deleteVideoComment = (videoId: string| undefined, commentId: string) => {
-    //TODO: delete specific comment
+export const deleteVideoComment = async (videoId: string| undefined, commentId: string) => {
+    await fetch('/api/videoComments/', {
+    // await fetch('http://localhost:8000/api/videoComments/', {
+        method: "DELETE",
+        body: JSON.stringify({
+            comment_id: commentId
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    .catch(error => {
+        console.error(error);
+    });
 };
