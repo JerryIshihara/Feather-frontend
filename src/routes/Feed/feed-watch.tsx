@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { Avatar, IconButton, TextField} from "@mui/material";
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 import { Container, Stack, Grid, Typography, Button, Paper, Divider, LinearProgress, Card, CardActionArea, CardMedia, Skeleton } from "@mui/material";
-import { Send } from "@mui/icons-material";
+import { Send, Delete} from "@mui/icons-material";
 
 import {getVideo } from "../../api/video";
 import {type CommentObject, getVideoComments, addVideoComment, deleteVideoComment} from "../../api/comment";
@@ -21,29 +21,37 @@ const FeedWatch = () => {
 	const [params, setParams] = useSearchParams();
 	const auth = useAuth() as any;
 	const [videoObject, setVideoObject] = useState<VideoObject>();
-    const [comments, setComments] = useState<CommentObject[]>();
+    const [comments, setComments] = useState<CommentObject[]>([]);
     const [addingComment, setAddingComment] = useState<boolean>();
     const [newComment, setNewComment] = useState<string>("");
 
+
+    const fetchComments = () => {
+        getVideoComments(params.get("v")).then((currentComments: any) => {
+            if (currentComments) {
+                setComments(() => [...currentComments]);
+            }
+        });
+    }
+
 	useEffect(() => {
-		getVideo(params.get("v")).then((res: any) => {
-			if (res.data.Item) {
-				const v = res.data.Item;
-				setVideoObject(v);
-			}
-		});
-        setComments(getVideoComments(params.get("v")));
+        getVideo(params.get("v")).then((res: any) => {
+            if (res.data.Item) {
+                const v = res.data.Item;
+                setVideoObject(v);
+            }
+        });
+        fetchComments();
 	}, [params]);
 
     const addComment = (comment: string) => {
-        addVideoComment(videoObject?.["video-id"].S, comment);
+        addVideoComment(videoObject?.["video-id"].S, comment).then(() => fetchComments());
         setNewComment("");
         setAddingComment(false); 
     };
 
     const deleteComment = (commentId: string) => {
-        //TODO: add logic to delete comment
-        deleteVideoComment(videoObject?.["video-id"].S, commentId);
+        deleteVideoComment(videoObject?.["video-id"].S, commentId).then(() => fetchComments());
     };
 
 	return (
@@ -73,11 +81,11 @@ const FeedWatch = () => {
                             {auth.user && auth.user.attributes && <Avatar src={auth.user.attributes.picture} />}
                         </Stack>
                     </Grid>
-                        <Grid item xs onClick={()=>setAddingComment(true)}>
-                            <ClickAwayListener onClickAway={()=>setAddingComment(false)}>
-                                <TextField id="standard-basic" label="Add a comment" placeholder="Add a comment..." variant="standard"  fullWidth value = {newComment} onChange={e => {setNewComment(e.target.value);}}/>
-                            </ClickAwayListener>
-                        </Grid>
+                    <Grid item xs onClick={()=>setAddingComment(true)}>
+                        <ClickAwayListener onClickAway={()=>setAddingComment(false)}>
+                            <TextField id="standard-basic" label="Add a comment" placeholder="Add a comment..." variant="standard"  fullWidth value = {newComment} onChange={e => {setNewComment(e.target.value);}}/>
+                        </ClickAwayListener>
+                    </Grid>
                     {addingComment &&
                         <Grid item xs={1}>
                             <Stack direction="row" justifyContent="flex-end" sx={{ pt:1 }}>
@@ -102,6 +110,11 @@ const FeedWatch = () => {
                             {comment.createdAt}
                           </p>
                         </Grid>
+                        <Grid item xs={1} justifyContent="right">
+                                <IconButton onClick={()=>{deleteComment(comment.commentId)}}>
+                                    <Delete />
+                                </IconButton>
+                    </Grid>
                       </Grid>
                       {idx < comments.length - 1 && <Divider variant="fullWidth"/>}
                     </Paper>
