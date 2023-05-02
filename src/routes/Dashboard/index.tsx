@@ -16,7 +16,6 @@ import { Menu } from "@mui/icons-material";
 
 import { useAuth } from "../../contexts/auth";
 import { Logo } from "../../components";
-
 import Setting from "./settings";
 import Video from "./videos";
 import Billing from "./billing";
