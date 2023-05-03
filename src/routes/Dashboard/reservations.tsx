@@ -29,7 +29,8 @@ import court3 from "./assets/court3.jpg";
 import court4 from "./assets/court4.jpg";
 import court5 from "./assets/court5.jpg";
 
-import { AuthContext } from "../../contexts/auth";
+import { useAuth } from "../../contexts/auth";
+import { useNotification } from "../../contexts/notification";
 
 type Reservation = {
 	id: number;
@@ -45,13 +46,13 @@ type Reservation = {
 };
 
 const Reservations = () => {
-	const auth = useContext(AuthContext) as any;
+	const auth = useAuth();
 	const theme = useTheme();
-	const user_id = auth.user.attributes.sub;
 	const [reservations, setReservations] = useState<Reservation[]>([]);
 	const [selectedReservation, setSelectedReservation] = useState<Reservation>();
 	const [open, setOpen] = useState(false);
 	const [confirmCancel, setConfirmCancel] = useState(false);
+	const notification = useNotification();
 	const [cancelStatus, setCancelStatus] = useState("");
 
 	const handleDetailsClick = (reservation: Reservation) => {
@@ -64,7 +65,7 @@ const Reservations = () => {
 
 		setCancelStatus("pending");
 
-		fetch("/api/booking/cancel_reserve", {
+		fetch(process.env.REACT_APP_HEROKU_URL + "/api/booking/cancel_reserve", {
 			// fetch('http://localhost:8000/api/booking/cancel_reserve', {
 			method: "POST",
 			body: JSON.stringify({
@@ -78,7 +79,7 @@ const Reservations = () => {
 			.then(data => {
 				console.log(data);
 				setCancelStatus("success");
-				alert("You have successfully cancelled your reservation!");
+				notification.pop({ status: "success", message: "You have successfully cancelled your reservation!" });
 			})
 			.catch(error => {
 				console.error(error);
@@ -88,8 +89,10 @@ const Reservations = () => {
 
 	useEffect(() => {
 		const fetchReservations = async () => {
+			if (!(auth.user as any).attributes) return;
+			console.log((auth.user as any).attributes.sub);
 			//   const response = await fetch("http://localhost:8000/api/booking/getReserve?user_id=" + user_id);
-			const response = await fetch("/api/getReserve?user_id=" + user_id);
+			const response = await fetch(`${process.env.REACT_APP_HEROKU_URL}/api/booking/getReserve?user_id=` + (auth.user as any).attributes.sub);
 			const data = await response.json();
 			const reservationWithImages = data.courts.map((court: Reservation) => {
 				let image;

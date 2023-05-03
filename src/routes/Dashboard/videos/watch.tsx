@@ -1,28 +1,15 @@
 import React, { useMemo, useEffect, useRef, createRef } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
-import {
-	Container,
-	Stack,
-	Grid,
-	Typography,
-	Button,
-	Paper,
-	Divider,
-	LinearProgress,
-	Card,
-	CardActionArea,
-	CardMedia,
-	Skeleton,
-	Box,
-} from "@mui/material";
+import { Container, Stack, Typography, Button, Paper, LinearProgress, Box, useMediaQuery } from "@mui/material";
 import { AutoFixHigh, Insights, Delete } from "@mui/icons-material";
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, Title, LinearScale, CategoryScale } from "chart.js";
 import { Radar, Line } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
 
 import { extractSkeleton, getVideo } from "../../../api/video";
 import { useAuth } from "../../../contexts/auth";
 import { getCroppedImg } from "../../../utils/video";
+import ShortVideoModel from "./tiktok-modal";
+import { useTheme } from "@emotion/react";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
@@ -68,6 +55,12 @@ const crops = {
 	"1.0": { bbox_left: 832.0, bbox_top: 550.0, bbox_w: 157.0, bbox_h: 233.0 },
 } as any;
 
+const AI_VIDEOS = [
+	"raw/39aa7d3b-7ecf-4824-8e5e-5ccf98814faf.mp4",
+	"raw/74587a60-ed4f-4af7-825e-28bcfd16e894.mp4",
+	"raw/39cbcd1f-da07-4bb1-983c-d547bef86d2f.mp4",
+];
+
 type VideoObject = {
 	videoKey: { S: string };
 	title: { S: string };
@@ -82,8 +75,11 @@ const Watch = () => {
 	const auth = useAuth();
 	const [videoObject, setVideoObject] = React.useState<VideoObject>();
 	const [pending, setPending] = React.useState(false);
+	const [shortVideoDone, setShortVideoDone] = React.useState(false);
 	const videoRef = useRef(null);
+	const theme = useTheme() as any;
 	const [ctime, setCTime] = React.useState(0);
+	const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 	const [crop, setCrop] = React.useState<any>({
 		unit: "px", // Can be 'px' or '%'
 		x: 832,
@@ -166,7 +162,7 @@ const Watch = () => {
 	return (
 		<Container maxWidth="lg">
 			<Stack direction={{ sm: "column", md: "row" }} sx={{ minHeight: "500px", mb: 3, py: 4 }} spacing={4}>
-				<Stack direction="column" spacing={2} sx={{ flex: 3 }}>
+				<Stack direction="column" spacing={4} sx={{ flex: 3, mb: 5 }}>
 					<Box component="div">
 						{videoObject && (
 							<video
@@ -188,16 +184,45 @@ const Watch = () => {
 							/>
 						)}
 					</Box>
-					<Typography variant="h5">{videoObject?.title.S}</Typography>
+					<Stack direction="row" alignItems="center" justifyContent="space-between" spacing={2}>
+						<Typography variant="h5">{videoObject?.title.S}</Typography>
+						{AI_VIDEOS.includes(videoObject?.videoKey.S as any) && (
+							<Button
+								variant="contained"
+								size="large"
+								onClick={() => {
+									setPending(true);
+									setTimeout(() => {
+										setPending(false);
+										setShortVideoDone(true);
+									}, 5000);
+								}}
+								startIcon={<AutoFixHigh />}
+							>
+								AI Edit
+							</Button>
+						)}
+					</Stack>
+					{pending && (
+						<Paper elevation={3} sx={{ px: 5, borderRadius: 2, my: 5 }}>
+							<Stack direction="column" justifyItems="center" sx={{ minHeight: "64px", py: 5, px: 2 }} spacing={2}>
+								<Typography variant="h6">AI is currently editing your video. It may take a few seconds.</Typography>
+								<LinearProgress />
+							</Stack>
+						</Paper>
+					)}
+					{shortVideoDone && <ShortVideoModel show={shortVideoDone} handleClose={() => setShortVideoDone(false)} />}
 				</Stack>
-				<Box component="div" sx={{ flex: 1 }}>
+				<Box component="div" sx={{ flex: 1, width: isMobile ? "100%" : 400 }}>
 					<Stack direction="column" sx={{ minHeight: "64px", mb: 3 }} spacing={4}>
 						<Paper elevation={3} sx={{ px: 5, py: 3, borderRadius: 2 }}>
-							<Radar
-								options={options}
-								data={charjsdata}
-								//   {...props}
-							/>
+							<Stack direction="column" alignItems="center" spacing={2}>
+								<Radar
+									options={options}
+									data={charjsdata}
+									//   {...props}
+								/>
+							</Stack>
 						</Paper>
 						<Paper elevation={3} sx={{ px: 5, py: 3, borderRadius: 2 }}>
 							<Stack direction="column" alignItems="center" spacing={2}>
@@ -208,18 +233,7 @@ const Watch = () => {
 					</Stack>
 				</Box>
 			</Stack>
-			{pending && (
-				<Stack direction="row" alignItems="center" sx={{ minHeight: "64px" }} spacing={2}>
-					<Grid item xs>
-						<Paper elevation={3} sx={{ px: 5, borderRadius: 2 }}>
-							<Stack direction="column" justifyItems="center" sx={{ minHeight: "64px", py: 5, px: 2 }} spacing={2}>
-								<Typography variant="h6">AI is currently analyzing your video. It may take about 10 minutes.</Typography>
-								<LinearProgress />
-							</Stack>
-						</Paper>
-					</Grid>
-				</Stack>
-			)}
+
 			{/* <Paper elevation={3} sx={{ px: 5, py: 3, borderRadius: 2 }}>
 				<Typography variant="h6" sx={{ mb: 2 }}>
 					Which one is you?

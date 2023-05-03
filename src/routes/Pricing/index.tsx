@@ -23,7 +23,7 @@ const Pricing = () => {
 	return (
 		<PricingContainer maxWidth="lg" sx={{ p: 4 }}>
 			<Stack direction="column" alignItems="center" spacing={2} sx={{ mb: 10 }}>
-				<Typography variant={isMobile ? "h3" : "body2"} align="center" sx={{ fontWeight: "bold" }}>
+				<Typography variant={isMobile ? "h3" : "h1"} align="center" sx={{ fontWeight: "bold" }}>
 					Pricing Plans
 				</Typography>
 				<Typography variant="subtitle1" align="center" sx={{ color: theme.palette.text.secondary, maxWidth: "700px" }}>
