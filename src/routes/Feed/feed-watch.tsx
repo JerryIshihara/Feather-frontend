@@ -20,6 +20,7 @@ type VideoObject = {
 const FeedWatch = () => {
 	const [params, setParams] = useSearchParams();
 	const auth = useAuth() as any;
+    const userName = auth.user.attributes.given_name + " " + auth.user.attributes.family_name;
 	const [videoObject, setVideoObject] = useState<VideoObject>();
 	const [comments, setComments] = useState<CommentObject[]>([]);
 	const [addingComment, setAddingComment] = useState<boolean>();
@@ -123,15 +124,17 @@ const FeedWatch = () => {
 								<p style={{ textAlign: "left" }}>{comment.comment + " "}</p>
 								<p style={{ textAlign: "left", color: "gray" }}>{comment.createdAt}</p>
 							</Grid>
-							<Grid item xs={1} justifyContent="right">
-								<IconButton
-									onClick={() => {
-										deleteComment(comment.commentId);
-									}}
-								>
-									<Delete />
-								</IconButton>
-							</Grid>
+                            {userName === comment.userId &&
+                                <Grid item xs={1} justifyContent="right">
+                                    <IconButton
+                                        onClick={() => {
+                                            deleteComment(comment.commentId);
+                                        }}
+                                    >
+                                        <Delete />
+                                    </IconButton>
+                                </Grid>
+                            }
 						</Grid>
 						{idx < comments.length - 1 && <Divider variant="fullWidth" />}
 					</Paper>
