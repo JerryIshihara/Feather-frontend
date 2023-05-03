@@ -116,7 +116,10 @@ const FeedWatch = () => {
 						<Grid container wrap="nowrap" spacing={2}>
 							<Grid item></Grid>
 							<Grid justifyContent="left" item xs zeroMinWidth>
-								<h4 style={{ margin: 0, textAlign: "left" }}>{comment.userId}</h4>
+								<Stack direction="row" justifyContent="flex-start" sx={{ pt: 1 }} spacing={2}>
+									<Avatar alt="avatar" src={comment.avatar_url} sx={{ width: 30, height: 30 }} />
+									<Typography variant="h6">{comment.userId}</Typography>
+								</Stack>
 								<p style={{ textAlign: "left" }}>{comment.comment + " "}</p>
 								<p style={{ textAlign: "left", color: "gray" }}>{comment.createdAt}</p>
 							</Grid>

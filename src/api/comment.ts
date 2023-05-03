@@ -5,6 +5,7 @@ export type CommentObject = {
 	userId: string;
 	comment: string;
 	createdAt: string;
+	avatar_url?: string;
 };
 
 type CommentData = {
@@ -13,6 +14,7 @@ type CommentData = {
 	user_id: string;
 	comment: string;
 	created_at: string;
+	avatar_url?: string;
 };
 
 const testComments: CommentObject[] = [
@@ -52,6 +54,7 @@ export const getVideoComments = async (videoId: string | null) => {
 				userId: "" + commentData.user_id,
 				comment: commentData.comment,
 				createdAt: commentData.created_at,
+				avatar_url: commentData.avatar_url,
 			}));
 			return videoComments;
 		})
