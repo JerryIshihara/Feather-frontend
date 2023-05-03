@@ -5314,6 +5314,11 @@
     "@typescript-eslint/types" "5.52.0"
     eslint-visitor-keys "^3.3.0"
 
+"@uiw/react-heat-map@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@uiw/react-heat-map/-/react-heat-map-2.0.5.tgz#65755f16c84d6f0c0dcfad4c7e5ff1b4769a2e8c"
+  integrity sha512-VM/mEm46+ykX3AMu0FOUVP45plC9j1X0PDwyBgOdjCucE4weXj1nAzUmGb1tsDgaLh9yrQMHArvltJebAgkx4g==
+
 "@use-gesture/core@10.2.24":
   version "10.2.24"
   resolved "https://registry.yarnpkg.com/@use-gesture/core/-/core-10.2.24.tgz#88d13a60954ba62463c774acb92d12bf7b3d810c"

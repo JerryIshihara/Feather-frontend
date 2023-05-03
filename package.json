@@ -30,6 +30,7 @@
     "@types/react-dom": "^18.0.10",
     "@types/three": "^0.149.0",
     "@types/uuid": "^9.0.1",
+    "@uiw/react-heat-map": "^2.0.5",
     "aws-amplify": "^5.0.16",
     "chart.js": "^4.2.1",
     "dotenv": "^16.0.3",
