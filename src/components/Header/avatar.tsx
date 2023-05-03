@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Avatar, Button, useTheme } from "@mui/material";
+import { Avatar, Button, useMediaQuery, useTheme } from "@mui/material";
 import { deepOrange, cyan } from "@mui/material/colors";
 import { BigHead } from "@bigheads/core";
 
@@ -13,6 +13,7 @@ interface Props {
 
 const HeaderAvatar: React.FC<Props> = props => {
 	const theme = useTheme();
+	const isMobile = useMediaQuery((theme as any).breakpoints.down("md"));
 	const auth = useAuth() as any;
 	const navigate = useNavigate();
 	const show = useMemo(() => (auth.user ? true : false), [auth.user]);
@@ -25,10 +26,10 @@ const HeaderAvatar: React.FC<Props> = props => {
 					</div>
 				) : (
 					<>
-						<Link className="login-tab" to={"/auth/login"}>
+						<Link className="login-tab" to={"/auth/login"} style={{ fontSize: isMobile ? "14px" : "17px" }}>
 							Log in
 						</Link>
-						<Button variant="contained" size="large">
+						<Button variant="contained" size={isMobile ? "small" : "large"}>
 							<Link
 								style={{
 									textDecoration: "none",
