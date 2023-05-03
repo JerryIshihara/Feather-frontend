@@ -1,63 +1,46 @@
-// import React from "react";
-// import { useLocation, useSearchParams } from "react-router-dom";
-// import { Container, Stack, Grid, Typography, Button, Paper, Divider } from "@mui/material";
-// import { AutoFixHigh, Insights } from "@mui/icons-material";
-// import ReactPlayer from "react-player";
-
-// const Watch = () => {
-// 	const [params, setParams] = useSearchParams();
-// 	const { state } = useLocation();
-// 	const [file, setFile] = React.useState<string>();
-// 	return (
-// 		<Container maxWidth="lg">
-// 			<Stack direction="row" alignItems="center" sx={{ minHeight: "64px" }} spacing={2}>
-// 				<Grid item xs>
-// 					<Typography variant="h5">{state.videoObject.title.S}</Typography>
-// 				</Grid>
-// 				<Grid item xs="auto" sx={{ justifyContent: "end" }}></Grid>
-// 			</Stack>
-// 			<Stack direction="row" alignItems="center" sx={{ minHeight: "64px", my: 2 }}>
-// 				<input
-// 					type="file"
-// 					accept="video/*"
-// 					onChange={(e: any) => {
-// 						var f = e.target.files[0];
-// 						console.log(URL.createObjectURL(f));
-// 						setFile(URL.createObjectURL(f));
-// 					}}
-// 				/>
-
-// 				{file && <ReactPlayer url={file} />}
-
-// 				{/* <video controls autoPlay src={`${process.env.REACT_APP_CDN_URL}${params.get("v")}`} style={{ width: "100%", borderRadius: 10 }} /> */}
-// 			</Stack>
-// 			<Stack direction="row" alignItems="center" justifyContent="center" sx={{ width: "100%" }}>
-// 				<Paper elevation={3} sx={{ px: 5, borderRadius: 10 }}>
-// 					<Stack direction="row" alignItems="center" justifyItems="center" sx={{ minHeight: "64px" }} spacing={5}>
-// 						<Button variant="text" color="primary" sx={{ textTransform: "none" }} startIcon={<AutoFixHigh />}>
-// 							AI Edit
-// 						</Button>
-// 						<Divider orientation="vertical" variant="middle" flexItem />
-// 						<Button variant="text" color="primary" sx={{ textTransform: "none" }} startIcon={<Insights />}>
-// 							Analyze
-// 						</Button>
-// 					</Stack>
-// 				</Paper>
-// 			</Stack>
-// 		</Container>
-// 	);
-// };
-
-// export default Watch;
-
-import React from "react";
-import { useTheme, Container, Typography, Stack, Avatar } from "@mui/material";
+import React, {useState, useEffect} from "react";
+import { useTheme, Container, Typography, Stack, Avatar, Box} from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import { useAuth } from "../../contexts/auth";
+import HeatMap from '@uiw/react-heat-map';
+import { getVideo } from "../../api/video";
+import { grey } from '@mui/material/colors';
 
 const Profile = () => {
 	const theme = useTheme();
 	const auth = useAuth() as any;
+
+	const panelColorRecord:Record<number, string> = { 0: '#EBEDF0', 2: '#C6E48B', 4: '#7BC96F', 6: '#239A3B', 8: '#196127' };
+
+	const [activeDates, setActiveDates] = useState<any[]>([]);
+	const [totalActiveDate, setTotalActiveDate] = useState<number>(0);
+	const [uniqueDate, setUniqueDate] = useState<number>(0);
+
+	useEffect(() => {
+		if (activeDates.length > 0) return;
+		getVideo(null)
+			.then(res => {
+				if(res.data.Items.length > 0) {
+					const dates:string[] = res.data.Items.map((updateTime:any) => {
+						return new Date(Number(updateTime["updatedAt"]["N"]) * 1000).toLocaleDateString('zh-Hans-CN');
+					})
+					const uniqueDates = dates
+						.filter((date, index, array) => array.indexOf(date) === index); // filter out duplicates
+					const counts = uniqueDates.map(activeDate => ({
+						date: activeDate,
+						count: dates.filter(item => item === activeDate).length,
+						content: ''
+					}));
+					const totalCount = counts.reduce((a,v) =>  a = a + v.count , 0 );
+
+					// console.log("totalCount", totalCount);
+					console.log(JSON.stringify(counts));
+					setUniqueDate(() => uniqueDates.length);
+					setActiveDates((() => [...counts]));
+					setTotalActiveDate(() => totalCount);
+				}
+			});
+	}, []);
 
 	return (
 		<Container maxWidth="lg">
@@ -116,6 +99,48 @@ const Profile = () => {
 							</tr>
 						</tbody>
 					</table>
+				</Stack>
+				
+				{/********************************************** Heat Map **********************************************/}
+				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: 5 }}>
+					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+						Past Active Badminton Dates
+					</Typography>
+					<Stack direction="row" spacing={2} alignItems="center" justifyContent="left">
+
+					<HeatMap
+						value={activeDates}
+						width={600}
+						height={250}
+						startDate={new Date('2023/02/01')}
+						endDate={new Date('2023/05/01')}
+						weekLabels={undefined}
+						rectSize={25}
+						legendCellSize = {20}
+						space = {3}
+						style={{ color: '#D3D3D3' }}
+						rectProps={{
+							rx: 3
+						  }}
+						monthLabels={['', 'Feb', 'Mar', 'Apr', 'May', '', '', '', '', '', '', '']}
+						panelColors	= {panelColorRecord}
+						rectRender={(props, data) => {
+							return (
+							<Tooltip key={props.key} placement="top" title={`count: ${data.count || 0}`}>
+								<rect {...props} />
+							</Tooltip>
+							);
+						}}
+    				/>
+				
+					<Typography variant="h6" sx={{ fontWeight: "bold" }}>
+						Total Active Days: {totalActiveDate}
+						<br/>
+						Unique Active Days: {uniqueDate}
+					</Typography>
+					</Stack>
+			
+					
 				</Stack>
 
 				{/********************************************** Contact Information **********************************************/}
