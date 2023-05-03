@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { useTheme, Stack, Button, TextField, Divider } from "@mui/material";
+import { useTheme, Stack, Button, TextField, Divider, useMediaQuery } from "@mui/material";
 import { lightBlue } from "@mui/material/colors";
 
 import { useAuth } from "../../contexts/auth";
@@ -9,6 +9,7 @@ import GoogleButton from "./google-button";
 
 const Login = () => {
 	const theme = useTheme();
+	const isMobile = useMediaQuery((theme as any).breakpoints.down("md"));
 	const auth = useAuth();
 	const navigate = useNavigate();
 	const { innerWidth: width, innerHeight: height } = window;
@@ -44,10 +45,12 @@ const Login = () => {
 				height: height,
 			}}
 		>
-			<div style={{ flex: 1, backgroundColor: lightBlue[900], padding: theme.spacing(4) }}>
-				<h1 style={{ fontSize: "70px" }}>Start to know your badminton skills</h1>
-				<img alt="court" src={require("../../assets/court.png")} style={{ width: "100%" }} />
-			</div>
+			{!isMobile && (
+				<div style={{ flex: 1, backgroundColor: lightBlue[900], padding: theme.spacing(4) }}>
+					<h1 style={{ fontSize: "70px" }}>Start to know your badminton skills</h1>
+					<img alt="court" src={require("../../assets/court.png")} style={{ width: "100%" }} />
+				</div>
+			)}
 			<div style={{ flex: 1.2, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
 				<Logo
 					href="/"
@@ -55,7 +58,7 @@ const Login = () => {
 						marginBottom: theme.spacing(4),
 					}}
 				/>
-				<Stack direction="column" justifyContent="center" alignItems="center" spacing={2} sx={{ width: "40%" }}>
+				<Stack direction="column" justifyContent="center" alignItems="center" spacing={2} sx={{ width: isMobile ? "80%" : "40%" }}>
 					<h2>Welcome back!</h2>
 					<TextField
 						required

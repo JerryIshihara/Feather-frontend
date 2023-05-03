@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import { useTheme, Stack, Button, TextField } from "@mui/material";
+import { useTheme, Stack, Button, TextField, useMediaQuery } from "@mui/material";
 import { pink, grey, green } from "@mui/material/colors";
 import { Circle, CheckCircle } from "@mui/icons-material";
 
@@ -29,6 +29,7 @@ const PasswordCheckBox = ({ checked, message }: { checked: boolean; message: str
 
 const Signup = () => {
 	const theme = useTheme();
+	const isMobile = useMediaQuery((theme as any).breakpoints.down("md"));
 	const auth = useAuth();
 	const navigate = useNavigate();
 	const notification = useNotification();
@@ -91,10 +92,12 @@ const Signup = () => {
 				height: height,
 			}}
 		>
-			<div style={{ flex: 1, backgroundColor: pink[900], padding: theme.spacing(4) }}>
-				<h1 style={{ fontSize: "70px" }}>Start to know your badminton skills</h1>
-				<img alt="court" src={require("../../assets/smash.png")} style={{ width: "70%" }} />
-			</div>
+			{!isMobile && (
+				<div style={{ flex: 1, backgroundColor: pink[900], padding: theme.spacing(4) }}>
+					<h1 style={{ fontSize: "70px" }}>Start to know your badminton skills</h1>
+					<img alt="court" src={require("../../assets/smash.png")} style={{ width: "70%" }} />
+				</div>
+			)}
 			<div style={{ flex: 1.2, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
 				<Logo
 					href="/"
@@ -102,7 +105,7 @@ const Signup = () => {
 						marginBottom: theme.spacing(4),
 					}}
 				/>
-				<Stack direction="column" justifyContent="center" alignItems="center" spacing={2} sx={{ width: "40%" }}>
+				<Stack direction="column" justifyContent="center" alignItems="center" spacing={2} sx={{ width: isMobile ? "80%" : "40%" }}>
 					<h2>Let's start!</h2>
 					<TextField
 						required

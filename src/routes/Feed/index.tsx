@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { useTheme, Container, Typography, Stack, Grid, Box, CircularProgress} from "@mui/material";
+import { useTheme, Container, Typography, Stack, Grid, Box, CircularProgress } from "@mui/material";
 
 import { getVideo } from "../../api/video";
 import VideoThumbnail from "../Dashboard/videos/video-thumbnail";
@@ -32,7 +32,6 @@ const Feed = () => {
 							<Grid item xs>
 								<Typography variant="h4">Uploaded Videos</Typography>
 							</Grid>
-					
 						</Stack>
 
 						{loading ? (
@@ -40,13 +39,20 @@ const Feed = () => {
 								<CircularProgress size={50} />
 							</Stack>
 						) : (
-							<Box component="div" sx={{ mt: theme.spacing(4), display: "grid", gridTemplateColumns: { md: "1fr 1fr 1fr" }, gap: 4 }}>
+							<Box
+								component="div"
+								sx={{
+									mt: theme.spacing(4),
+									display: "grid",
+									gridTemplateColumns: { lg: "1fr 1fr 1fr", sm: "1fr 1fr", xs: "1fr" },
+									gap: 4,
+								}}
+							>
 								{videos.map(item => (
-									<VideoThumbnail key={item["video-id"]["S"]} videoObject={item} navigationPath = '/feed/'/>
+									<VideoThumbnail key={item["video-id"]["S"]} videoObject={item} navigationPath="/feed/" />
 								))}
 							</Box>
 						)}
-
 					</Container>
 				}
 			/>
