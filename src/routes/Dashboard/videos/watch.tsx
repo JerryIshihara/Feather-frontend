@@ -193,6 +193,7 @@ const Watch = () => {
 								onClick={() => {
 									setPending(true);
 									setTimeout(() => {
+										(videoRef.current as any).pause();
 										setPending(false);
 										setShortVideoDone(true);
 									}, 5000);
