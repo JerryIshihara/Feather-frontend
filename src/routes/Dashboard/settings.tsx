@@ -13,22 +13,24 @@ import {
 	FormLabel,
 	Button,
 	Stack,
+	useMediaQuery,
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 
 const Setting = () => {
 	const theme = useTheme();
+	const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
 	return (
 		<Container maxWidth="lg">
 			<Stack direction="column" spacing={6} sx={{ py: 4 }}>
 				{/* -----------------------------------------Password----------------------------------------- */}
-				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: 5 }}>
-					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: isMobile ? 3 : 5 }}>
+					<Typography variant={isMobile ? "h5" : "h4"} sx={{ fontWeight: "bold" }}>
 						Change Password
 						<div style={{ float: "right" }}>
-							<Button variant="contained" startIcon={<SaveIcon />} component="span">
-								Save
+							<Button variant={isMobile ? "text" : "contained"} startIcon={<SaveIcon />} component="span">
+								{isMobile ? "" : "Save"}
 							</Button>
 						</div>
 					</Typography>
@@ -48,12 +50,16 @@ const Setting = () => {
 				</Stack>
 
 				{/* -----------------------------------------Contact Info----------------------------------------- */}
-				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, backgroundColor: theme.palette.background.default, p: 5 }}>
-					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+				<Stack
+					direction="column"
+					spacing={4}
+					sx={{ borderRadius: 2, backgroundColor: theme.palette.background.default, p: isMobile ? 3 : 5 }}
+				>
+					<Typography variant={isMobile ? "h5" : "h4"} sx={{ fontWeight: "bold" }}>
 						Contact Information
 						<div style={{ float: "right" }}>
-							<Button variant="contained" startIcon={<SaveIcon />} component="span">
-								Save
+							<Button variant={isMobile ? "text" : "contained"} startIcon={<SaveIcon />} component="span">
+								{isMobile ? "" : "Save"}
 							</Button>
 						</div>
 					</Typography>
@@ -65,12 +71,16 @@ const Setting = () => {
 				</Stack>
 
 				{/* -----------------------------------------Addresses----------------------------------------- */}
-				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, backgroundColor: theme.palette.background.default, p: 5 }}>
-					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
-					Address
+				<Stack
+					direction="column"
+					spacing={4}
+					sx={{ borderRadius: 2, backgroundColor: theme.palette.background.default, p: isMobile ? 3 : 5 }}
+				>
+					<Typography variant={isMobile ? "h5" : "h4"} sx={{ fontWeight: "bold" }}>
+						Address
 						<div style={{ float: "right" }}>
-							<Button variant="contained" startIcon={<SaveIcon />} component="span">
-								Save
+							<Button variant={isMobile ? "text" : "contained"} startIcon={<SaveIcon />} component="span">
+								{isMobile ? "" : "Save"}
 							</Button>
 						</div>
 					</Typography>
@@ -82,12 +92,16 @@ const Setting = () => {
 				</Stack>
 
 				{/* -----------------------------------------Notification----------------------------------------- */}
-				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, backgroundColor: theme.palette.background.default, p: 5 }}>
-					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+				<Stack
+					direction="column"
+					spacing={4}
+					sx={{ borderRadius: 2, backgroundColor: theme.palette.background.default, p: isMobile ? 3 : 5 }}
+				>
+					<Typography variant={isMobile ? "h5" : "h4"} sx={{ fontWeight: "bold" }}>
 						Notifications
 						<div style={{ float: "right" }}>
-							<Button variant="contained" startIcon={<SaveIcon />} component="span">
-								Save
+							<Button variant={isMobile ? "text" : "contained"} startIcon={<SaveIcon />} component="span">
+								{isMobile ? "" : "Save"}
 							</Button>
 						</div>
 					</Typography>
@@ -113,12 +127,16 @@ const Setting = () => {
 				</Stack>
 
 				{/* -----------------------------------------Preference----------------------------------------- */}
-				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, backgroundColor: theme.palette.background.default, p: 5 }}>
-					<Typography variant="h4" sx={{ fontWeight: "bold" }} gutterBottom>
+				<Stack
+					direction="column"
+					spacing={4}
+					sx={{ borderRadius: 2, backgroundColor: theme.palette.background.default, p: isMobile ? 3 : 5 }}
+				>
+					<Typography variant={isMobile ? "h5" : "h4"} sx={{ fontWeight: "bold" }} gutterBottom>
 						Preferences
 						<div style={{ float: "right" }}>
-							<Button variant="contained" startIcon={<SaveIcon />} component="span">
-								Save
+							<Button variant={isMobile ? "text" : "contained"} startIcon={<SaveIcon />} component="span">
+								{isMobile ? "" : "Save"}
 							</Button>
 						</div>
 					</Typography>

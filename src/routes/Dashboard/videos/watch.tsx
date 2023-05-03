@@ -154,7 +154,7 @@ const Watch = () => {
 			if (res.data.Item) {
 				const v = res.data.Item;
 				setVideoObject(v);
-				setPending(v.inferenceTaskStatus?.S === "PENDING");
+				// setPending(v.inferenceTaskStatus?.S === "PENDING");
 			}
 		});
 	}, [params]);
@@ -185,18 +185,20 @@ const Watch = () => {
 						)}
 					</Box>
 					<Stack direction="row" alignItems="center" justifyContent="space-between" spacing={2}>
-						<Typography variant="h5">{videoObject?.title.S}</Typography>
+						<Typography variant={isMobile ? "h6" : "h5"}>{videoObject?.title.S}</Typography>
 						{AI_VIDEOS.includes(videoObject?.videoKey.S as any) && (
 							<Button
+								disabled={pending}
 								variant="contained"
-								size="large"
+								size={isMobile ? "small" : "large"}
 								onClick={() => {
+									if (pending || shortVideoDone) return;
 									setPending(true);
 									setTimeout(() => {
 										(videoRef.current as any).pause();
 										setPending(false);
 										setShortVideoDone(true);
-									}, 5000);
+									}, 100);
 								}}
 								startIcon={<AutoFixHigh />}
 							>
@@ -205,8 +207,8 @@ const Watch = () => {
 						)}
 					</Stack>
 					{pending && (
-						<Paper elevation={3} sx={{ px: 5, borderRadius: 2, my: 5 }}>
-							<Stack direction="column" justifyItems="center" sx={{ minHeight: "64px", py: 5, px: 2 }} spacing={2}>
+						<Paper elevation={3} sx={{ px: isMobile ? 2 : 5, borderRadius: 2, my: 5 }}>
+							<Stack direction="column" justifyItems="center" sx={{ minHeight: "64px", py: isMobile ? 2 : 5, px: 2 }} spacing={2}>
 								<Typography variant="h6">AI is currently editing your video. It may take a few seconds.</Typography>
 								<LinearProgress />
 							</Stack>

@@ -84,7 +84,8 @@ const Dashboard = () => {
 	return (
 		<div
 			style={{
-				padding: theme.spacing(4),
+				padding: isMobile ? theme.spacing(1) : theme.spacing(4),
+				paddingTop: theme.spacing(4),
 				minHeight: "100vh",
 				backgroundColor: "black",
 				color: theme.palette.text.primary,
@@ -119,7 +120,7 @@ const Dashboard = () => {
 			)}
 			<Stack direction="column" spacing={2} sx={{ width: "100%" }}>
 				{isMobile && (
-					<Stack direction="row">
+					<Stack direction="row" alignItems="center">
 						<Stack direction="row" alignItems="center" sx={{ flex: 1 }} spacing={2}>
 							<IconButton
 								color="primary"

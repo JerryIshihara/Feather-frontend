@@ -44,7 +44,7 @@ const Video = () => {
 					<Container maxWidth="lg">
 						<Stack direction="row" alignItems="center" sx={{ minHeight: "64px" }} spacing={2}>
 							<Grid item xs>
-								<Typography variant="h4">Videos</Typography>
+								<Typography variant={"h4"}>Videos</Typography>
 							</Grid>
 							<Grid item xs="auto" sx={{ justifyContent: "end" }}>
 								<input

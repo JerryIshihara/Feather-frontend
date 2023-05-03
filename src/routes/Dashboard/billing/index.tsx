@@ -15,6 +15,7 @@ import {
 	Stack,
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
+import { useMediaQuery } from "@mui/material";
 import PricingTable from "./pricingTable";
 import Payment from "./payment";
 
@@ -24,14 +25,16 @@ interface BillingSectionProps {
 	children: React.ReactNode;
 }
 const BillingSection = (props: BillingSectionProps) => {
+	const theme = useTheme();
+	const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 	return (
 		<Stack direction="column" spacing={4}>
 			<Stack direction="row" sx={{ justifyContent: "space-between" }}>
-				<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+				<Typography variant={isMobile ? "h5" : "h4"} sx={{ fontWeight: "bold" }}>
 					{props.title}
 				</Typography>
-				<Button variant="contained" startIcon={<SaveIcon />} component="span">
-					Save
+				<Button variant={isMobile ? "text" : "contained"} startIcon={<SaveIcon />} component="span">
+					{isMobile ? "" : "Save"}
 				</Button>
 			</Stack>
 			{props.children}

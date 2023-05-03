@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useTheme, Container, Typography, Stack, Avatar, Box } from "@mui/material";
+import { useTheme, Container, Typography, Stack, Avatar, Box, useMediaQuery } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import { useAuth } from "../../contexts/auth";
 import HeatMap from "@uiw/react-heat-map";
@@ -8,6 +8,7 @@ import { grey } from "@mui/material/colors";
 
 const Profile = () => {
 	const theme = useTheme();
+	const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 	const auth = useAuth() as any;
 
 	const panelColorRecord: Record<number, string> = { 0: "#EBEDF0", 2: "#C6E48B", 4: "#7BC96F", 6: "#239A3B", 8: "#196127" };
@@ -44,8 +45,8 @@ const Profile = () => {
 		<Container maxWidth="lg">
 			<Stack direction="column" spacing={6} sx={{ py: 4 }}>
 				{/********************************************** Basic Information **********************************************/}
-				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: 5 }}>
-					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: isMobile ? 3 : 5 }}>
+					<Typography variant={isMobile ? "h5" : "h4"} sx={{ fontWeight: "bold" }}>
 						Basic Information
 					</Typography>
 					<table style={{ borderCollapse: "collapse", border: "none", marginTop: "20px" }}>
@@ -55,7 +56,7 @@ const Profile = () => {
 									<b>Avatar</b>
 								</td>
 								<td style={{ width: "60%" }}>
-									<Avatar src={auth.user.attributes.picture} sx={{ width: 80, height: 80 }} />
+									<Avatar src={auth.user.attributes.picture} sx={{ width: isMobile ? 50 : 80, height: isMobile ? 50 : 80 }} />
 								</td>
 							</tr>
 							<tr>
@@ -100,8 +101,8 @@ const Profile = () => {
 				</Stack>
 
 				{/********************************************** Heat Map **********************************************/}
-				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: 5 }}>
-					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: isMobile ? 3 : 5 }}>
+					<Typography variant={isMobile ? "h5" : "h4"} sx={{ fontWeight: "bold" }}>
 						Past Active Badminton Dates
 					</Typography>
 					<Stack direction={{ sm: "column", md: "row" }} spacing={2} alignItems="center">
@@ -141,8 +142,8 @@ const Profile = () => {
 				</Stack>
 
 				{/********************************************** Contact Information **********************************************/}
-				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: 5 }}>
-					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: isMobile ? 3 : 5 }}>
+					<Typography variant={isMobile ? "h5" : "h4"} sx={{ fontWeight: "bold" }}>
 						Contact Information
 					</Typography>
 					<table style={{ borderCollapse: "collapse", border: "none", marginTop: "20px" }}>
@@ -164,8 +165,8 @@ const Profile = () => {
 				</Stack>
 
 				{/********************************************** Addresses **********************************************/}
-				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: 5 }}>
-					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
+				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: isMobile ? 3 : 5 }}>
+					<Typography variant={isMobile ? "h5" : "h4"} sx={{ fontWeight: "bold" }}>
 						Address
 					</Typography>
 					<table style={{ borderCollapse: "collapse", border: "none", marginTop: "20px" }}>
