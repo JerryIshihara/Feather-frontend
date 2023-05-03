@@ -24,7 +24,9 @@ const Profile = () => {
 					const dates:string[] = res.data.Items.map((updateTime:any) => {
 						return new Date(Number(updateTime["updatedAt"]["N"]) * 1000).toLocaleDateString('zh-Hans-CN');
 					})
-					const counts = dates.map(activeDate => ({
+					const uniqueDates = dates
+						.filter((date, index, array) => array.indexOf(date) === index); // filter out duplicates
+					const counts = uniqueDates.map(activeDate => ({
 						date: activeDate,
 						count: dates.filter(item => item === activeDate).length,
 						content: ''
@@ -32,8 +34,8 @@ const Profile = () => {
 					const totalCount = counts.reduce((a,v) =>  a = a + v.count , 0 );
 
 					// console.log("totalCount", totalCount);
-					// console.log(JSON.stringify(counts));
-					setUniqueDate(() => counts.length);
+					console.log(JSON.stringify(counts));
+					setUniqueDate(() => uniqueDates.length);
 					setActiveDates((() => [...counts]));
 					setTotalActiveDate(() => totalCount);
 				}
