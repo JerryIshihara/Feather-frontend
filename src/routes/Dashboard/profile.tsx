@@ -1,16 +1,16 @@
-import React, {useState, useEffect} from "react";
-import { useTheme, Container, Typography, Stack, Avatar, Box} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { useTheme, Container, Typography, Stack, Avatar, Box } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import { useAuth } from "../../contexts/auth";
-import HeatMap from '@uiw/react-heat-map';
+import HeatMap from "@uiw/react-heat-map";
 import { getVideo } from "../../api/video";
-import { grey } from '@mui/material/colors';
+import { grey } from "@mui/material/colors";
 
 const Profile = () => {
 	const theme = useTheme();
 	const auth = useAuth() as any;
 
-	const panelColorRecord:Record<number, string> = { 0: '#EBEDF0', 2: '#C6E48B', 4: '#7BC96F', 6: '#239A3B', 8: '#196127' };
+	const panelColorRecord: Record<number, string> = { 0: "#EBEDF0", 2: "#C6E48B", 4: "#7BC96F", 6: "#239A3B", 8: "#196127" };
 
 	const [activeDates, setActiveDates] = useState<any[]>([]);
 	const [totalActiveDate, setTotalActiveDate] = useState<number>(0);
@@ -18,28 +18,26 @@ const Profile = () => {
 
 	useEffect(() => {
 		if (activeDates.length > 0) return;
-		getVideo(null)
-			.then(res => {
-				if(res.data.Items.length > 0) {
-					const dates:string[] = res.data.Items.map((updateTime:any) => {
-						return new Date(Number(updateTime["updatedAt"]["N"]) * 1000).toLocaleDateString('zh-Hans-CN');
-					})
-					const uniqueDates = dates
-						.filter((date, index, array) => array.indexOf(date) === index); // filter out duplicates
-					const counts = uniqueDates.map(activeDate => ({
-						date: activeDate,
-						count: dates.filter(item => item === activeDate).length,
-						content: ''
-					}));
-					const totalCount = counts.reduce((a,v) =>  a = a + v.count , 0 );
+		getVideo(null).then(res => {
+			if (res.data.Items.length > 0) {
+				const dates: string[] = res.data.Items.map((updateTime: any) => {
+					return new Date(Number(updateTime["updatedAt"]["N"]) * 1000).toLocaleDateString("zh-Hans-CN");
+				});
+				const uniqueDates = dates.filter((date, index, array) => array.indexOf(date) === index); // filter out duplicates
+				const counts = uniqueDates.map(activeDate => ({
+					date: activeDate,
+					count: dates.filter(item => item === activeDate).length,
+					content: "",
+				}));
+				const totalCount = counts.reduce((a, v) => (a = a + v.count), 0);
 
-					// console.log("totalCount", totalCount);
-					console.log(JSON.stringify(counts));
-					setUniqueDate(() => uniqueDates.length);
-					setActiveDates((() => [...counts]));
-					setTotalActiveDate(() => totalCount);
-				}
-			});
+				// console.log("totalCount", totalCount);
+				console.log(JSON.stringify(counts));
+				setUniqueDate(() => uniqueDates.length);
+				setActiveDates(() => [...counts]);
+				setTotalActiveDate(() => totalCount);
+			}
+		});
 	}, []);
 
 	return (
@@ -100,47 +98,46 @@ const Profile = () => {
 						</tbody>
 					</table>
 				</Stack>
-				
+
 				{/********************************************** Heat Map **********************************************/}
 				<Stack direction="column" spacing={4} sx={{ borderRadius: 2, bgcolor: theme.palette.background.default, p: 5 }}>
 					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
 						Past Active Badminton Dates
 					</Typography>
-					<Stack direction="row" spacing={2} alignItems="center" justifyContent="left">
+					<Stack direction={{ sm: "column", md: "row" }} spacing={2} alignItems="center">
+						<Box component="div">
+							<HeatMap
+								value={activeDates}
+								// width={600}
+								height={250}
+								startDate={new Date("2023/02/01")}
+								endDate={new Date("2023/05/01")}
+								weekLabels={undefined}
+								rectSize={25}
+								legendCellSize={20}
+								space={3}
+								style={{ color: "#D3D3D3", margin: 10 }}
+								rectProps={{
+									rx: 3,
+								}}
+								monthLabels={["", "Feb", "Mar", "Apr", "May", "", "", "", "", "", "", ""]}
+								panelColors={panelColorRecord}
+								rectRender={(props: any, data: any) => {
+									return (
+										<Tooltip key={props.key} placement="top" title={`count: ${data.count || 0}`}>
+											<rect {...props} />
+										</Tooltip>
+									);
+								}}
+							/>
+						</Box>
 
-					<HeatMap
-						value={activeDates}
-						width={600}
-						height={250}
-						startDate={new Date('2023/02/01')}
-						endDate={new Date('2023/05/01')}
-						weekLabels={undefined}
-						rectSize={25}
-						legendCellSize = {20}
-						space = {3}
-						style={{ color: '#D3D3D3' }}
-						rectProps={{
-							rx: 3
-						  }}
-						monthLabels={['', 'Feb', 'Mar', 'Apr', 'May', '', '', '', '', '', '', '']}
-						panelColors	= {panelColorRecord}
-						rectRender={(props, data) => {
-							return (
-							<Tooltip key={props.key} placement="top" title={`count: ${data.count || 0}`}>
-								<rect {...props} />
-							</Tooltip>
-							);
-						}}
-    				/>
-				
-					<Typography variant="h6" sx={{ fontWeight: "bold" }}>
-						Total Active Days: {totalActiveDate}
-						<br/>
-						Unique Active Days: {uniqueDate}
-					</Typography>
+						<Typography variant="h6" sx={{ fontWeight: "bold" }}>
+							Total Active Days: {totalActiveDate}
+							<br />
+							Unique Active Days: {uniqueDate}
+						</Typography>
 					</Stack>
-			
-					
 				</Stack>
 
 				{/********************************************** Contact Information **********************************************/}
