@@ -10,6 +10,8 @@ const Profile = () => {
 	const theme = useTheme();
 	const auth = useAuth() as any;
 
+	const panelColorRecord:Record<number, string> = { 0: '#EBEDF0', 2: '#C6E48B', 4: '#7BC96F', 6: '#239A3B', 8: '#196127' };
+
 	const [activeDates, setActiveDates] = useState<any[]>([]);
 	const [totalActiveDate, setTotalActiveDate] = useState<number>(0);
 	const [uniqueDate, setUniqueDate] = useState<number>(0);
@@ -102,7 +104,7 @@ const Profile = () => {
 					<Typography variant="h4" sx={{ fontWeight: "bold" }}>
 						Past Active Badminton Dates
 					</Typography>
-					<Stack direction="row" spacing={2} alignItems="center" justifyContent="center">
+					<Stack direction="row" spacing={2} alignItems="center" justifyContent="left">
 
 					<HeatMap
 						value={activeDates}
@@ -112,11 +114,14 @@ const Profile = () => {
 						endDate={new Date('2023/05/01')}
 						weekLabels={undefined}
 						rectSize={25}
+						legendCellSize = {20}
+						space = {3}
 						style={{ color: '#D3D3D3' }}
 						rectProps={{
 							rx: 3
 						  }}
 						monthLabels={['', 'Feb', 'Mar', 'Apr', 'May', '', '', '', '', '', '', '']}
+						panelColors	= {panelColorRecord}
 						rectRender={(props, data) => {
 							return (
 							<Tooltip key={props.key} placement="top" title={`count: ${data.count || 0}`}>
